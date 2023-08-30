@@ -209,7 +209,7 @@ function SearchDialog({ open, setOpen }) {
               }
             >
               {searchResults.length === 0 && search !== "" && !searching ? (
-                <div className="text-xl text-white font-semibold top-1/2 left-1/2 w-full h-full">
+                <div className="text-xl text-white font-semibold w-full h-full flex justify-center items-center">
                   No results found
                 </div>
               ) : searchResults.length !== 0 && search !== "" && !searching ? (
