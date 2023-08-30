@@ -63,7 +63,10 @@ function Navbar({ navIndx, setNavIndx }) {
         }}
       >
         {/* ====================||  TITLE  ||==================== */}
-        <a className="font-bold md:text-4xl text-3xl mr-8" href="/flikipedia/">
+        <a
+          className="font-bold md:text-4xl text-3xl mr-8"
+          href="/flikipedia/movie/"
+        >
           <span className="text-[#FF6F00]">Fliki</span>
           <span className="text-[#00BFFF]">Pedia</span>
         </a>

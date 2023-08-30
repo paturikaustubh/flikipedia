@@ -28,7 +28,7 @@ function App() {
         <Route path="/" element={<LazyAss />}>
           <Route
             path="/flikipedia/"
-            element={<Navigate to="/flikipedia/movie" />}
+            element={<Navigate to="/flikipedia/movie/" />}
           />
           <Route
             path="/flikipedia/movie"
