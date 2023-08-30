@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 
-import { Menu, SearchOutlined, SettingsOutlined } from "@mui/icons-material";
+import {
+  Menu,
+  SearchOutlined,
+  SettingsOutlined,
+  West,
+} from "@mui/icons-material";
 import {
   Dialog,
   useMediaQuery,
@@ -59,12 +64,15 @@ function Navbar({ navIndx, setNavIndx }) {
         style={{
           ...(blur === 0 ? "" : { backgroundColor: `rgba(9, 9, 11, 0.8)` }),
           backdropFilter: `blur(${blur}px)`,
-          transitionDuration: "700ms",
+          transitionDuration: "300ms",
         }}
       >
         {/* ====================||  TITLE  ||==================== */}
+        <button className="rounded-full">
+          <West style={{ color: "white" }} />
+        </button>
         <a
-          className="font-bold md:text-4xl text-3xl mr-8"
+          className="font-bold md:text-4xl text-3xl mx-8"
           href="/flikipedia/movie/"
         >
           <span className="text-[#FF6F00]">Fliki</span>
@@ -103,14 +111,14 @@ function Navbar({ navIndx, setNavIndx }) {
           placeholder={`Search in ${navigators[navIndx].name}`}
         /> */}
         <button
-          className="text-gray-50 ml-auto outline-none"
+          className="text-gray-50 ml-auto outline-none lg:block hidden"
           onClick={() => setOpenSearch(true)}
         >
           <SearchOutlined />
         </button>
         <SearchDialog open={openSearch} setOpen={setOpenSearch} />
         <button
-          className="lg:hidden block text-white ml-4"
+          className="lg:hidden block text-white ml-auto"
           onClick={() => setOpenDrawer(true)}
         >
           <Menu fontSize="large" />
@@ -124,6 +132,7 @@ function Navbar({ navIndx, setNavIndx }) {
           list={navigators}
           open={openDrawer}
           setOpen={setOpenDrawer}
+          setOpenSearch={setOpenSearch}
         />
       </div>
     </nav>
@@ -225,7 +234,7 @@ function SearchDialog({ open, setOpen }) {
                       return (
                         <Link
                           to={`/flikipedia/${result.media_type}/${result.id}`}
-                          className="flex items-center min-h-36 gap-3 font-light hover:bg-neutral-800 duration-300 p-2 rounded-md"
+                          className="flex items-center min-h-36 gap-3 font-light hover:bg-neutral-800 duration-75 p-2 rounded-md"
                           key={`${result.media_type}/${result.id}`}
                           onClick={() => {
                             setOpen(false);
@@ -289,7 +298,7 @@ function SearchDialog({ open, setOpen }) {
   );
 }
 
-function DrawerMenu({ list, open, setOpen }) {
+function DrawerMenu({ list, open, setOpen, setOpenSearch }) {
   const sizeBreak = useMediaQuery("(min-width:1024px)");
 
   const handleClose = () => {
@@ -307,6 +316,20 @@ function DrawerMenu({ list, open, setOpen }) {
       <List className="w-72 h-full bg-neutral-800 text-white">
         <p className="text-4xl font-semibold my-4 px-2">Menu</p>
         <Divider sx={{ color: "white" }} />
+        <ListItem
+          disablePadding
+          className="mb-1"
+          onClick={() => {
+            handleClose();
+            window.scrollTo({ top: 0 });
+          }}
+        >
+          <ListItemButton onClick={() => setOpenSearch(true)}>
+            <ListItemText>
+              <p className="text-lg">Search</p>
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
         {list.map((element) => {
           return (
             <ListItem

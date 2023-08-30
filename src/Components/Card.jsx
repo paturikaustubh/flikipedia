@@ -11,13 +11,12 @@ function Card({ item, type }) {
       >
         <img
           loading="lazy"
-          className="hover:lg:scale-105 duration-300 lg:opacity-80 rounded-md hover:opacity-100"
+          className="hover:lg:scale-105 duration-300 lg:opacity-80 rounded-md hover:opacity-100 max-w-sm"
           src={
             item.poster_path &&
             `https://image.tmdb.org/t/p/w300${item.poster_path}`
           }
           alt={item.title}
-          width="260px"
         />
       </Link>
     </Tooltip>

@@ -140,7 +140,7 @@ function Details({ type, setLoading, setNavIndx }) {
               </p>
               {/* GENRES */}
               {details.genres[0] !== null && (
-                <div className="flex gap-4">
+                <div className="flex gap-4 flex-wrap">
                   {details.genres.map((genre, indx) => {
                     return (
                       <Link
@@ -268,12 +268,11 @@ function Details({ type, setLoading, setNavIndx }) {
             >
               Budget:{" "}
               <span className="ml-2 lg:text-xl text-lg font-light" id="budget">
-                {"$ "}
                 {details.budget === 0
                   ? "Not Updated Yet"
-                  : details.budget
+                  : `$ ${details.budget
                       .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
               </span>
             </p>
             <p
@@ -288,12 +287,11 @@ function Details({ type, setLoading, setNavIndx }) {
                 className="ml-2 lg:text-xl text-lg font-light text-red-500"
                 id="revenue"
               >
-                {"$ "}
                 {details.revenue === 0
                   ? "Not Updated Yet"
-                  : details.revenue
+                  : `$ ${details.revenue
                       .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
               </span>
             </p>
           </div>
@@ -311,7 +309,7 @@ function Details({ type, setLoading, setNavIndx }) {
                   <div className="w-[300px] flex flex-col gap-2" key={indx}>
                     <Link
                       key={season.season_number}
-                      to={`/flikipedia/season/${season.season_number}`}
+                      to={`season/${season.season_number}`}
                     >
                       <img
                         loading="lazy"

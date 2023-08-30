@@ -38,17 +38,17 @@ function SeasonDetails({ setNavIndx, setLoading }) {
   return (
     <div className="text-white mt-24">
       <div className="flex flex-col flex-wrap lg:px-12 md:px-12 px-4">
-        <div className="grid gap-4 lg:grid-cols-12 grid-cols-6">
+        <div className="flex gap-10 lg:flex-row flex-col">
           <img
             loading="lazy"
             src={
               details.poster_path &&
-              `https://image.tmdb.org/t/p/w500${details.poster_path}`
+              `https://image.tmdb.org/t/p/w300${details.poster_path}`
             }
             alt=""
-            className="md:col-span-3 rounded-md col-span-4"
+            className="rounded-md max-w-xs"
           />
-          <div className="flex flex-col gap-4 self-end flex-wrap md:col-span-9 col-span-6">
+          <div className="flex flex-col gap-4 lg:self-end flex-wrap md:col-span-9 col-span-6">
             <div className="lg:text-6xl text-5xl font-semibold">
               {details.name}
             </div>
@@ -59,7 +59,7 @@ function SeasonDetails({ setNavIndx, setLoading }) {
             <div className="lg:text-2xl text-xl text-gray-400 font-light">{`${details.overview}`}</div>
           </div>
         </div>
-        <div className="mt-24 mb-8 text-5xl font-semibold text-sky-600">
+        <div className="mt-12 mb-8 text-5xl font-semibold text-sky-600">
           Episodes
         </div>
       </div>
@@ -90,11 +90,11 @@ function SeasonDetails({ setNavIndx, setLoading }) {
                     {episode.runtime} min
                   </div>
                 </div>
-                <div className="p-4 text-lg lg:block hidden">
-                  {episode.overview}
-                </div>
-                <div className="p-4 justify-self-end text-xl lg:block hidden">
-                  {Math.round(episode.vote_average * 10) / 10}
+                <div className="pr-4 text-lg lg:flex hidden col-span-2 justify-between gap-10">
+                  <div className="max-w-[55ch] text-justify">
+                    {episode.overview}
+                  </div>
+                  <div>{Math.round(episode.vote_average * 10) / 10}</div>
                 </div>
               </div>
             );
