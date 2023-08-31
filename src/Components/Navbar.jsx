@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 import {
@@ -26,6 +26,7 @@ import {
 } from "@mui/material";
 
 function Navbar({ navIndx, setNavIndx }) {
+  let navigate = useNavigate();
   const [blur, setBlur] = useState(0);
   const navigators = [
     {
@@ -60,7 +61,7 @@ function Navbar({ navIndx, setNavIndx }) {
   return (
     <nav>
       <div
-        className="flex h-20 flex-wrap px-8 py-2 items-center w-full top-0 z-10 fixed drop-shadow-md"
+        className="flex h-20 flex-wrap px-8 py-2 items-center w-full top-0 z-50 fixed drop-shadow-md"
         style={{
           ...(blur === 0 ? "" : { backgroundColor: `rgba(9, 9, 11, 0.8)` }),
           backdropFilter: `blur(${blur}px)`,
@@ -68,11 +69,16 @@ function Navbar({ navIndx, setNavIndx }) {
         }}
       >
         {/* ====================||  TITLE  ||==================== */}
-        <button className="rounded-full">
+        <button
+          className="rounded-full outline-none"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
           <West style={{ color: "white" }} />
         </button>
         <a
-          className="font-bold md:text-4xl text-3xl mx-8"
+          className="font-bold md:text-4xl text-3xl lg:mx-8 ml-auto"
           href="/flikipedia/movie/"
         >
           <span className="text-[#FF6F00]">Fliki</span>

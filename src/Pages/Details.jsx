@@ -359,16 +359,16 @@ function Details({ type, setLoading, setNavIndx }) {
           ...(details.production_companies.length === 0 && { display: "none" }),
         }}
       >
-        <p className="lg:text-5xl text-4xl font-semibold">
+        <p className="lg:text-5xl text-3xl font-semibold">
           Production Companies
         </p>
-        <div className="w-80 lg:w-96 border-2 border-red-500 mt-1 mb-4" />
+        <div className=" lg:w-80 w-44 border-2 border-red-500 mt-1 mb-4" />
         <div className="flex flex-wrap justify-around gap-4">
           {details.production_companies.map((comp, indx) => {
             return (
               <div
                 key={indx}
-                className="w-[400px] shrink-0 self-center"
+                className=" w-40 lg:shrink-0 self-center"
                 style={{
                   ...(comp.logo_path === null &&
                     details.production_companies.length > 1 && {
@@ -414,7 +414,7 @@ function Details({ type, setLoading, setNavIndx }) {
           You might like these too...
         </p>
         <div className="w-40 lg:w-96 border-2 border-red-500 mt-1 mb-4" />
-        <div className="flex gap-3 overflow-x-auto py-3 pl-8 mb-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll">
+        <div className="flex gap-3 overflow-x-auto py-3 scroll-p-8 mb-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll">
           {suggestions.map((suggestion) => {
             if (suggestion.poster_path)
               return <Card type={type} item={suggestion} />;

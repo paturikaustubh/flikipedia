@@ -26,37 +26,37 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
     {
       name: "Popular",
       data: popularData,
-      to: "flikiepdia/popular",
+      to: "category/popular",
     },
     {
       name: "Top Rated",
       data: topData,
-      to: "flikiepdia/top-rated",
+      to: "category/top-rated",
     },
     {
       name: "Action-Adventure",
       data: actionData,
-      to: "flikiepdia/action-adventure",
+      to: "category/action-adventure",
     },
     {
       name: "Comedy",
       data: comedyData,
-      to: "flikiepdia/comedy",
+      to: "category/comedy",
     },
     {
       name: "Crime-Suspense",
       data: crimeData,
-      to: "flikiepdia/crime-suspense",
+      to: "category/crime-suspense",
     },
     {
       name: "Thriller-Horror",
       data: horrorData,
-      to: "flikiepdia/thriller-horror",
+      to: "category/thriller-horror",
     },
     {
       name: "Romance",
       data: romanceData,
-      to: "flikiepdia/romance",
+      to: "category/romance",
     },
   ];
 
@@ -172,11 +172,11 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
                   <East fontSize="large" />
                 </span>
               </p>
-              <div className="flex gap-3 overflow-x-auto py-3 pl-8 mb-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll">
+              <div className="flex gap-3 overflow-x-auto py-3 pl-8 mb-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll group">
                 {element.data.slice(0, 15).map((item, indx) => {
                   return <Card item={item} key={indx} type={type} />;
                 })}
-                <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center gap-4 ml-12">
                   <Link
                     onClick={() => window.scrollTo({ top: 0 })}
                     to={element.to}
