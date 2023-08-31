@@ -7,7 +7,7 @@ function Card({ item, type }) {
       <Link
         onClick={() => window.scrollTo({ top: 0 })}
         to={`/flikipedia/${type}/${item.id}`}
-        className=" flex-shrink-0 lg:w-40 hover:lg:w-96 duration-500 z-10"
+        className="flex-shrink-0 lg:w-40 hover:lg:w-96 duration-500 z-10"
       >
         <img
           loading="lazy"

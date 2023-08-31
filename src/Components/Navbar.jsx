@@ -123,12 +123,12 @@ function Navbar({ navIndx, setNavIndx }) {
           <SearchOutlined />
         </button>
         <SearchDialog open={openSearch} setOpen={setOpenSearch} />
-        <button
+        <div
           className="lg:hidden block text-white ml-auto"
           onClick={() => setOpenDrawer(true)}
         >
           <Menu fontSize="large" />
-        </button>
+        </div>
         <button className="lg:block hidden text-white ml-8">
           <SettingsOutlined />
         </button>
