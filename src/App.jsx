@@ -19,7 +19,7 @@ const Genres = lazy(() => import("./Pages/Genres"));
 function App() {
   const [loading, setLoading] = useState(false);
   const [navIndx, setNavIndx] = useState();
-  const [adult, setAdult] = useState(true);
+  const [adult, setAdult] = useState(false);
 
   return (
     <Router>

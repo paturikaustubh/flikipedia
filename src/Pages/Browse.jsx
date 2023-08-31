@@ -180,7 +180,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
                   <Link
                     onClick={() => window.scrollTo({ top: 0 })}
                     to={element.to}
-                    className="bg-neutral-800 rounded-full p-4 mx-28 hover:lg:scale-110 duration-300"
+                    className="bg-neutral-800 rounded-full p-4 lg:mx-28 hover:lg:scale-110 duration-300"
                   >
                     <East fontSize="large" />
                   </Link>
