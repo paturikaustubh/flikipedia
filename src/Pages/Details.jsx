@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 
 import { Tooltip } from "@mui/material";
 import Card from "../Components/Card";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 function Details({ type, setLoading, setNavIndx }) {
   let { id } = useParams();
@@ -438,11 +439,48 @@ function Details({ type, setLoading, setNavIndx }) {
             <span className="details-heading-underline" />
           </span>
         </p>
-        <div className="flex gap-3 overflow-x-auto py-3 scroll-p-8 mb-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll mt-4">
-          {suggestions.map((suggestion) => {
-            if (suggestion.poster_path)
-              return <Card type={type} item={suggestion} />;
-          })}
+        <div className="relative">
+          <div
+            className="flex gap-3 overflow-x-auto py-3 pl-8 my-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll group cards scroll-smooth"
+            id="cards"
+            onScroll={() => {
+              const element = document.getElementById("cards");
+              if (Math.round(element.scrollLeft) === 0)
+                document.getElementById("prev").classList.remove("show");
+              else document.getElementById("prev").classList.add("show");
+              if (
+                Math.round(element.scrollWidth - element.clientWidth) ===
+                Math.round(element.scrollLeft)
+              )
+                document.getElementById("next").classList.remove("show");
+              else document.getElementById("next").classList.add("show");
+            }}
+          >
+            {suggestions.map((suggestion) => {
+              if (suggestion.poster_path)
+                return <Card type={type} item={suggestion} />;
+            })}
+            <div
+              id={"prev"}
+              className={`lg:flex justify-center text-5xl items-center absolute left-0 z-20 h-[75%] prev hidden`}
+              onClick={() => {
+                const element = document.getElementById("cards");
+                element.scrollLeft -= 1500;
+              }}
+            >
+              <ChevronLeft fontSize="inherit" />
+            </div>
+            <div
+              id={"next"}
+              className={`lg:flex justify-center text-5xl items-center absolute right-0 z-20 h-[75%] next show hidden`}
+              onClick={() => {
+                const element = document.getElementById("cards");
+                element.scrollLeft += 1500;
+              }}
+            >
+              <ChevronRight fontSize="inherit" />
+            </div>
+          </div>
         </div>
       </div>
     </div>

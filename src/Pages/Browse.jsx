@@ -36,27 +36,27 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
     {
       name: "Action-Adventure",
       data: actionData,
-      to: "category/action-adventure",
+      to: "genre/action-adventure",
     },
     {
       name: "Comedy",
       data: comedyData,
-      to: "category/comedy",
+      to: "genre/comedy",
     },
     {
       name: "Crime-Suspense",
       data: crimeData,
-      to: "category/crime-suspense",
+      to: "genre/crime-suspense",
     },
     {
-      name: "Thriller-Horror",
+      name: "Horror-Thriller",
       data: horrorData,
-      to: "category/thriller-horror",
+      to: "genre/thriller-horror",
     },
     {
       name: "Romance",
       data: romanceData,
-      to: "category/romance",
+      to: "genre/romance",
     },
   ];
 
