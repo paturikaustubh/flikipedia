@@ -165,20 +165,20 @@ function Details({ type, setLoading, setNavIndx }) {
       </div>
       <div className="grid lg:gap-20 gap-4 grid-cols-1 lg:grid-cols-2 mb-16 px-8 mt-14">
         <div className="mt-2">
-          <p className="lg:text-5xl text-4xl font-semibold">Overview</p>
+          <p className="lg:text-4xl text-2xl font-semibold">Overview</p>
           <div className="lg:w-48 w-24 border-2 border-red-500 mt-1" />
-          <p className="lg:text-xl text-lg mt-4">
+          <p className="lg:text-lg mt-4">
             {details.overview || "Not Updated Yet"}
           </p>
         </div>
 
         <div className="mt-2">
-          <p className="lg:text-5xl text-4xl font-semibold">Details</p>
+          <p className="lg:text-4xl text-2xl font-semibold">Details</p>
           <div className="lg:w-32 w-20 border-2 border-red-500 mt-1" />
           <div className="mt-4 flex flex-col gap-3">
-            <p className="font-semibold lg:text-2xl text-xl">
+            <p className="font-semibold lg:text-lg">
               Original Title:{" "}
-              <span className="ml-2 lg:text-xl text-lg font-light">
+              <span className="ml-2 font-light">
                 {type === "movie"
                   ? details.original_title
                   : details.original_name}
@@ -186,71 +186,71 @@ function Details({ type, setLoading, setNavIndx }) {
             </p>
 
             <p
-              className="font-semibold lg:text-2xl text-xl"
+              className="font-semibold lg:text-lg"
               style={{ ...(type === "movie" && { display: "none" }) }}
             >
               Status:{" "}
-              <span className="ml-2 lg:text-xl text-lg font-light" id="status">
+              <span className="ml-2 font-light" id="status">
                 {details.status}
               </span>
             </p>
 
             <p
-              className="font-semibold lg:text-2xl text-xl"
+              className="font-semibold lg:text-lg"
               style={{ ...(type === "movie" && { display: "none" }) }}
             >
               Seasons - Episodes:{" "}
-              <span className="ml-2 lg:text-xl text-lg font-light">
+              <span className="ml-2 font-light">
                 {`${details.number_of_seasons} - ${details.number_of_episodes}`}
               </span>
             </p>
 
             <p
-              className="font-semibold lg:text-2xl text-xl"
+              className="font-semibold lg:text-lg"
               style={{ ...(type === "tv" && { display: "none" }) }}
             >
               Run Time:{" "}
-              <span className="ml-2 lg:text-xl text-lg font-light">
+              <span className="ml-2 font-light">
                 {timeConvert(details.runtime)}
               </span>
             </p>
 
             <p
-              className="font-semibold lg:text-2xl text-xl"
+              className="font-semibold lg:text-lg"
               style={{ ...(type === "tv" && { display: "none" }) }}
             >
               Release Date:{" "}
-              <span className="ml-2 lg:text-xl text-lg font-light text-sky-500">
+              <span className="ml-2 font-light text-sky-500">
                 {dayjs(details.release_date).format("DD/MM/YYYY")}
               </span>
             </p>
 
             <p
-              className="font-semibold lg:text-2xl text-xl"
+              className="font-semibold lg:text-lg"
               style={{ ...(type === "movie" && { display: "none" }) }}
             >
               Latest Airing Period:{" "}
-              <span className="ml-2 lg:text-xl text-lg font-light text-sky-500">
+              <span className="ml-2 font-light text-sky-500">
                 {dayjs(details.first_air_date).format("DD/MM/YYYY")}{" "}
                 <b className="text-sm text-slate-100">TO</b>
                 {"   "}
                 {dayjs(details.last_air_date).format("DD/MM/YYYY")}
               </span>
             </p>
-            <p className="font-semibold text-2xl">
+            <p className="font-semibold lg:text-lg">
               Original Language:{" "}
-              <span className="ml-2 lg:text-xl text-lg font-light">
+              <span className="ml-2 font-light">
                 {details.original_language.toUpperCase()}
               </span>
             </p>
-            <div className="font-semibold text-2xl">
+            <div className="font-semibold lg:text-lg">
               Available Languages:{" "}
               <div className="flex flex-wrap gap-4 mt-1 mb-2">
                 {details.spoken_languages.map((lang) => {
                   return (
                     <Tooltip title={lang.english_name}>
                       <span
-                        className="ml-2 lg:text-xl text-lg font-light border-white border-2 rounded-md px-2 py-1"
+                        className="ml-2 font-light border-white border-2 rounded-md px-2 py-1"
                         key={lang.name}
                       >
                         {lang.name}
@@ -261,13 +261,13 @@ function Details({ type, setLoading, setNavIndx }) {
               </div>
             </div>
             <p
-              className="font-semibold text-2xl"
+              className="font-semibold lg:text-lg"
               style={{
                 ...(type === "tv" && { display: "none" }),
               }}
             >
               Budget:{" "}
-              <span className="ml-2 lg:text-xl text-lg font-light" id="budget">
+              <span className="ml-2 font-light" id="budget">
                 {details.budget === 0
                   ? "Not Updated Yet"
                   : `$ ${details.budget
@@ -276,17 +276,14 @@ function Details({ type, setLoading, setNavIndx }) {
               </span>
             </p>
             <p
-              className="font-semibold text-2xl"
+              className="font-semibold lg:text-lg"
               style={{
                 ...(details.budget === 0 ||
                   (type === "tv" && { display: "none" })),
               }}
             >
               Revenue:{" "}
-              <span
-                className="ml-2 lg:text-xl text-lg font-light text-red-500"
-                id="revenue"
-              >
+              <span className="ml-2 font-light text-red-500" id="revenue">
                 {details.revenue === 0
                   ? "Not Updated Yet"
                   : `$ ${details.revenue
@@ -301,7 +298,7 @@ function Details({ type, setLoading, setNavIndx }) {
       {type === "tv" && (
         <>
           <div className="px-8 mb-20 flex flex-col">
-            <p className="lg:text-5xl text-4xl font-semibold">Seasons</p>
+            <p className="lg:text-4xl text-2xl font-semibold">Seasons</p>
             <div className="w-24 lg:w-36 border-2 border-red-500 mt-1 mb-4" />
             <div className="flex gap-4 justify-around flex-wrap mt-8">
               {details.seasons.map((season, indx) => {
@@ -330,7 +327,7 @@ function Details({ type, setLoading, setNavIndx }) {
             </div>
           </div>
           <div className="px-8 mb-20 flex flex-col">
-            <p className="lg:text-5xl text-4xl font-semibold">Networks</p>
+            <p className="lg:text-4xl text-2xl font-semibold">Networks</p>
             <div className="w-24 lg:w-36 border-2 border-red-500 mt-1 mb-4" />
             <div className="flex justify-around flex-wrap">
               {details.networks.map((network, indx) => {
@@ -359,7 +356,7 @@ function Details({ type, setLoading, setNavIndx }) {
           ...(details.production_companies.length === 0 && { display: "none" }),
         }}
       >
-        <p className="lg:text-5xl text-3xl font-semibold">
+        <p className="lg:text-4xl text-2xl font-semibold">
           Production Companies
         </p>
         <div className=" lg:w-80 w-44 border-2 border-red-500 mt-1 mb-4" />
@@ -396,7 +393,7 @@ function Details({ type, setLoading, setNavIndx }) {
         className="px-8 flex-col flex flex-wrap"
         style={{ ...(details.homepage === "" && { display: "none" }) }}
       >
-        <p className="lg:text-5xl text-4xl font-semibold">Useful Links</p>
+        <p className="lg:text-4xl text-2xl font-semibold">Useful Links</p>
         <div className="w-40 lg:w-60 border-2 border-red-500 mt-1 mb-4" />
         <div className="flex justtify-between gap-3 mb-12">
           <Link
@@ -410,7 +407,7 @@ function Details({ type, setLoading, setNavIndx }) {
       </div>
 
       <div className="px-8 flex flex-col flex-w mb-16 mt-8">
-        <p className="lg:text-5xl text-4xl font-semibold">
+        <p className="lg:text-4xl text-2xl font-semibold">
           You might like these too...
         </p>
         <div className="w-40 lg:w-96 border-2 border-red-500 mt-1 mb-4" />

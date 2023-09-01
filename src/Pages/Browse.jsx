@@ -179,14 +179,24 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
                   onScroll={() => {
                     const element = document.getElementById(`cards-${index}`);
                     if (Math.round(element.scrollLeft) === 0)
-                      document.getElementById("prev").classList.remove("show");
-                    else document.getElementById("prev").classList.add("show");
+                      document
+                        .getElementById(`prev-${index}`)
+                        .classList.remove("show");
+                    else
+                      document
+                        .getElementById(`prev-${index}`)
+                        .classList.add("show");
                     if (
                       Math.round(element.scrollWidth - element.clientWidth) ===
                       Math.round(element.scrollLeft)
                     )
-                      document.getElementById("next").classList.remove("show");
-                    else document.getElementById("next").classList.add("show");
+                      document
+                        .getElementById(`next-${index}`)
+                        .classList.remove("show");
+                    else
+                      document
+                        .getElementById(`next-${index}`)
+                        .classList.add("show");
                   }}
                 >
                   {element.data.slice(0, 15).map((item, indx) => {
@@ -203,8 +213,8 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
                     <p className="text-xl">View more</p>
                   </div>
                   <div
-                    id="prev"
-                    className="lg:flex justify-center text-5xl items-center absolute left-0 z-20 h-[75%] prev hidden"
+                    id={`prev-${index}`}
+                    className={`lg:flex justify-center text-5xl items-center absolute left-0 z-20 h-[75%] prev hidden`}
                     onClick={() => {
                       const element = document.getElementById(`cards-${index}`);
                       element.scrollLeft -= 1500;
@@ -213,8 +223,8 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
                     <ChevronLeft fontSize="inherit" />
                   </div>
                   <div
-                    id="next"
-                    className="lg:flex justify-center text-5xl items-center absolute right-0 z-20 h-[75%] next show hidden"
+                    id={`next-${index}`}
+                    className={`lg:flex justify-center text-5xl items-center absolute right-0 z-20 h-[75%] next show hidden`}
                     onClick={() => {
                       const element = document.getElementById(`cards-${index}`);
                       element.scrollLeft += 1500;
