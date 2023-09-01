@@ -214,7 +214,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
                   </div>
                   <div
                     id="next"
-                    className="lg:flex justify-center text-5xl items-center absolute right-0 z-20 h-[75%] next hidden"
+                    className="lg:flex justify-center text-5xl items-center absolute right-0 z-20 h-[75%] next show hidden"
                     onClick={() => {
                       const element = document.getElementById(`cards-${index}`);
                       element.scrollLeft += 1500;
