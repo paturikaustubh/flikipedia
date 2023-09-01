@@ -69,4 +69,17 @@
     opacity: 1;
     visibility: visible;
   }
+
+  .details-heading-title {
+    position: relative;
+  }
+
+  .details-heading-underline {
+    position: absolute;
+    inset: 0;
+    display: inline;
+    transform: translate(0%, 10%);
+    width: 75%;
+    border-bottom: 3px solid #ff6f00;
+  }
 }
