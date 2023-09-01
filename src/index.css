@@ -39,4 +39,34 @@
       z-index: 11;
     }
   }
+
+  .prev,
+  .next {
+    opacity: 0;
+    transition: 300ms;
+    padding: 0.1em;
+    cursor: pointer;
+    visibility: hidden;
+  }
+
+  .prev {
+    border-top-right-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
+  }
+
+  .next {
+    border-top-left-radius: 0.25em;
+    border-bottom-left-radius: 0.25em;
+  }
+
+  .prev:hover,
+  .next:hover {
+    backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .cards:hover :where(.next.show, .prev.show) {
+    opacity: 1;
+    visibility: visible;
+  }
 }
