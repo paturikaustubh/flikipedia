@@ -172,7 +172,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
                   <East fontSize="large" />
                 </span>
               </p>
-              <div className="flex gap-3 overflow-x-auto py-3 pl-8 mb-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll group">
+              <div className="flex gap-3 overflow-x-auto py-3 pl-8 mb-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll group cards">
                 {element.data.slice(0, 15).map((item, indx) => {
                   return <Card item={item} key={indx} type={type} />;
                 })}
