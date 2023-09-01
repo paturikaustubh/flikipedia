@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 
@@ -6,8 +6,9 @@ import { ChevronLeft, ChevronRight, East } from "@mui/icons-material";
 
 import Carousel from "../Components/Carousel";
 import Card from "../Components/Card";
+import { Consumer, Data } from "../Context/Data";
 
-function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
+function Movies({ setLoading, setNavIndx, navIndx, type }) {
   const [carouselData, setCarouselData] = useState([]);
   const [topData, setTopData] = useState([]);
   const [popularData, setPopularData] = useState([]);
@@ -60,6 +61,8 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
     },
   ];
 
+  const { adult } = useContext(Consumer);
+
   useEffect(() => {
     type === "movie" ? setNavIndx(0) : setNavIndx(1);
     // window.scrollTo({ top: 0, behavior: "smooth" });
@@ -77,7 +80,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
 
     function getTopData() {
       Axios.get(
-        `https://api.themoviedb.org/3/${type}/top_rated?language=en-US&page=1`,
+        `https://api.themoviedb.org/3/${type}?include_adult=${adult}/top_rated?language=en-US&page=1`,
         {
           headers: header,
         }
@@ -99,7 +102,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
 
     function getActionData() {
       Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=28%2C12`,
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=28%2C12`,
         { headers: header }
       ).then((resp) => {
         setActionData(resp.data.results);
@@ -108,7 +111,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
 
     function getComedyData() {
       Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=35`,
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=35`,
         { headers: header }
       ).then((resp) => {
         setComedyData(resp.data.results);
@@ -117,7 +120,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
 
     function getCrimeData() {
       Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=80,9648`,
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=80,9648`,
         { headers: header }
       ).then((resp) => {
         setCrimeData(resp.data.results);
@@ -126,7 +129,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
 
     function getHorrorData() {
       Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=27,53`,
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=27,53`,
         { headers: header }
       ).then((resp) => {
         setHorrorData(resp.data.results);
@@ -135,7 +138,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
 
     function getRomanceData() {
       Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=10749`,
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=10749`,
         { headers: header }
       ).then((resp) => {
         setRomanceData(resp.data.results);
@@ -151,7 +154,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type, adult }) {
     getCrimeData();
     getHorrorData();
     getRomanceData();
-  }, [type]);
+  }, [type, adult]);
 
   return (
     <>

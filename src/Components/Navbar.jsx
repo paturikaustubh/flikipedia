@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 
@@ -24,6 +24,7 @@ import {
   ListItemText,
   CircularProgress,
 } from "@mui/material";
+import { Consumer } from "../Context/Data";
 
 function Navbar({ navIndx, setNavIndx }) {
   let navigate = useNavigate();
@@ -48,7 +49,8 @@ function Navbar({ navIndx, setNavIndx }) {
     },
   ];
   const [openSearch, setOpenSearch] = useState(false);
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openMenu, setOpenDrawer] = useState(false);
+  const [openPreferences, setOpenPreferences] = useState(false);
 
   window.onscroll = () => {
     if (document.documentElement.scrollTop > 50) {
@@ -129,23 +131,26 @@ function Navbar({ navIndx, setNavIndx }) {
         >
           <Menu fontSize="large" />
         </div>
-        <button className="lg:block hidden text-white ml-8">
+        <button
+          className="lg:block hidden text-white ml-8"
+          onClick={() => setOpenPreferences(true)}
+        >
           <SettingsOutlined />
         </button>
       </div>
-      <div className="">
-        <DrawerMenu
-          list={navigators}
-          open={openDrawer}
-          setOpen={setOpenDrawer}
-          setOpenSearch={setOpenSearch}
-        />
-      </div>
+      <DrawerMenu
+        list={navigators}
+        open={openMenu}
+        setOpen={setOpenDrawer}
+        setOpenSearch={setOpenSearch}
+      />
+      <PreferencesMenu open={openPreferences} setOpen={setOpenPreferences} />
     </nav>
   );
 }
 
 function SearchDialog({ open, setOpen }) {
+  const { adult } = useContext(Consumer);
   let header = {
     accept: "application/json",
     Authorization:
@@ -165,7 +170,7 @@ function SearchDialog({ open, setOpen }) {
     setSearching(true);
     let cancel;
     Axios.get(
-      `https://api.themoviedb.org/3/search/multi?query=${search}&include_adult=false&language=en-US&page=1`,
+      `https://api.themoviedb.org/3/search/multi?query=${search}&include_adult=${adult}&language=en-US&page=1`,
       {
         headers: header,
         cancelToken: new Axios.CancelToken((c) => (cancel = c)),
@@ -319,45 +324,106 @@ function DrawerMenu({ list, open, setOpen, setOpenSearch }) {
       onClose={handleClose}
       sx={{ backdropFilter: "blur(3px)" }}
     >
-      <List className="w-72 h-full bg-neutral-800 text-white">
-        <p className="text-4xl font-semibold my-4 px-2">Menu</p>
-        <Divider sx={{ color: "white" }} />
-        <ListItem
-          disablePadding
-          className="mb-1"
-          onClick={() => {
-            handleClose();
-            window.scrollTo({ top: 0 });
-          }}
-        >
-          <ListItemButton onClick={() => setOpenSearch(true)}>
-            <ListItemText>
-              <p className="text-lg">Search</p>
-            </ListItemText>
-          </ListItemButton>
-        </ListItem>
-        {list.map((element) => {
-          return (
-            <ListItem
-              key={element.to}
-              disablePadding
-              className="mb-1"
-              onClick={() => {
-                handleClose();
-                window.scrollTo({ top: 0 });
-              }}
-            >
-              <Link className="w-full" to={element.to}>
-                <ListItemButton>
-                  <ListItemText>
-                    <p className="text-lg">{element.name}</p>
-                  </ListItemText>
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          );
-        })}
-      </List>
+      <div className="bg-neutral-800 h-full">
+        <List className="w-72 text-white">
+          <p className="text-4xl font-semibold my-4 px-2 text-fliki-500">
+            Menu
+          </p>
+          <ListItem
+            disablePadding
+            className="mb-1"
+            onClick={() => {
+              handleClose();
+              window.scrollTo({ top: 0 });
+            }}
+          >
+            <ListItemButton onClick={() => setOpenSearch(true)}>
+              <ListItemText>
+                <p className="text-lg">Search</p>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+          {list.map((element) => {
+            return (
+              <ListItem
+                key={element.to}
+                disablePadding
+                className="mb-1"
+                onClick={() => {
+                  handleClose();
+                  window.scrollTo({ top: 0 });
+                }}
+              >
+                <Link className="w-full" to={element.to}>
+                  <ListItemButton>
+                    <ListItemText>
+                      <p className="text-lg">{element.name}</p>
+                    </ListItemText>
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+            );
+          })}
+        </List>
+        <List className="w-72 bg-neutral-800 text-white">
+          <Consumer>
+            {({ adult, handleAdult }) => {
+              return (
+                <>
+                  <p className="text-4xl font-semibold my-4 px-2 text-fliki-500">
+                    Preferences
+                  </p>
+                  <ListItem disablePadding className="mb-1">
+                    <ListItemButton onClick={() => handleAdult(!adult)}>
+                      <ListItemText>
+                        <p className="text-lg">
+                          {adult ? "Disable" : "Enable"} adult content
+                        </p>
+                      </ListItemText>
+                    </ListItemButton>
+                  </ListItem>
+                </>
+              );
+            }}
+          </Consumer>
+        </List>
+      </div>
+    </Drawer>
+  );
+}
+
+function PreferencesMenu({ open, setOpen }) {
+  return (
+    <Drawer
+      anchor="right"
+      open={open}
+      onClose={() => setOpen(false)}
+      sx={{ backdropFilter: "blur(3px)" }}
+    >
+      <div className="bg-neutral-800 h-full">
+        <List className="w-72 bg-neutral-800 text-white">
+          <Consumer>
+            {({ adult, handleAdult }) => {
+              return (
+                <>
+                  <p className="text-4xl font-semibold my-4 px-2 text-fliki-500">
+                    Preferences
+                  </p>
+                  <ListItem disablePadding className="mb-1">
+                    <ListItemButton onClick={() => handleAdult(!adult)}>
+                      <ListItemText>
+                        <p className="text-lg">
+                          {adult ? "Disable" : "Enable"} adult content
+                        </p>
+                      </ListItemText>
+                    </ListItemButton>
+                  </ListItem>
+                </>
+              );
+            }}
+          </Consumer>
+        </List>
+      </div>
     </Drawer>
   );
 }
