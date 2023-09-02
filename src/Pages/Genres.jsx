@@ -4,9 +4,13 @@ import { useParams } from "react-router-dom";
 import { Autocomplete, TextField } from "@mui/material";
 
 function Genres({ setNavIndx }) {
+  const [separator, setSeparator] = useState("%2C");
+  const [genres, setGenres] = useState([]);
+
   const { type, id } = useParams();
 
   useEffect(() => {
+    console.log(genres.join(separator));
     type === "movie" ? setNavIndx(0) : setNavIndx(1);
   });
 

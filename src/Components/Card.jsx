@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 function Card({ item, type, indx }) {
-  console.log(item);
   return (
     <Link
       onClick={() => window.scrollTo({ top: 0 })}
