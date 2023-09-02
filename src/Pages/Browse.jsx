@@ -17,11 +17,6 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
   const [crimeData, setCrimeData] = useState([]);
   const [horrorData, setHorrorData] = useState([]);
   const [romanceData, setRomanceData] = useState([]);
-  let header = {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYWJkZGUxZmYxNTg5MjBhMzc5ZDNmZjhjNDk2YzVkNyIsInN1YiI6IjY0NmI2ZDhkYzM1MTRjMmIwYTMzNWMwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5HbEmD6dynpOHWFNSglBkGwyS7-Scl1pyUtLwXzBpnI",
-  };
 
   const bodyElements = [
     {
@@ -61,7 +56,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
     },
   ];
 
-  const { adult } = useContext(Consumer);
+  const { adult, header } = useContext(Consumer);
 
   useEffect(() => {
     type === "movie" ? setNavIndx(0) : setNavIndx(1);

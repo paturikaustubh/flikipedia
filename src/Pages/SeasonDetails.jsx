@@ -1,19 +1,16 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
 import dayjs from "dayjs";
+import { Consumer } from "../Context/Data";
 
 function SeasonDetails({ setNavIndx, setLoading }) {
   const { no, id } = useParams();
+  const { header } = useContext(Consumer);
 
   const [details, setDetails] = useState({ episodes: [] });
   const listInnerRef = useRef();
 
-  let header = {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYWJkZGUxZmYxNTg5MjBhMzc5ZDNmZjhjNDk2YzVkNyIsInN1YiI6IjY0NmI2ZDhkYzM1MTRjMmIwYTMzNWMwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5HbEmD6dynpOHWFNSglBkGwyS7-Scl1pyUtLwXzBpnI",
-  };
   window.onscroll(() => {
     const { scrollTop, scrollHeight } = listInnerRef.current;
     console.log(" scrollTop, scrollHeight", scrollTop, scrollHeight);

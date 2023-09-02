@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Axios from "axios";
 import dayjs from "dayjs";
@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { Tooltip } from "@mui/material";
 import Card from "../Components/Card";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Consumer } from "../Context/Data";
 
 function Details({ type, setLoading, setNavIndx }) {
   let { id } = useParams();
@@ -22,11 +23,8 @@ function Details({ type, setLoading, setNavIndx }) {
   });
   const [suggestions, setSuggestions] = useState([]);
 
-  let header = {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYWJkZGUxZmYxNTg5MjBhMzc5ZDNmZjhjNDk2YzVkNyIsInN1YiI6IjY0NmI2ZDhkYzM1MTRjMmIwYTMzNWMwOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5HbEmD6dynpOHWFNSglBkGwyS7-Scl1pyUtLwXzBpnI",
-  };
+  const { header } = useContext(Consumer);
+
   function timeConvert(n) {
     var num = n;
     var hours = num / 60;
