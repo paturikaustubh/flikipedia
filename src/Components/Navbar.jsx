@@ -400,7 +400,7 @@ function PreferencesMenu({ open, setOpen }) {
       onClose={() => setOpen(false)}
       sx={{ backdropFilter: "blur(3px)" }}
     >
-      <div className="bg-neutral-800 h-full">
+      <div className="bg-neutral-800 h-full px-4 py-2">
         <List className="w-72 bg-neutral-800 text-white">
           <Consumer>
             {({ adult, handleAdult }) => {

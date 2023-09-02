@@ -37,27 +37,27 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
     {
       name: "Action-Adventure",
       data: actionData,
-      to: "genre/action-adventure",
+      to: "genre",
     },
     {
       name: "Comedy",
       data: comedyData,
-      to: "genre/comedy",
+      to: "genre",
     },
     {
       name: "Crime-Suspense",
       data: crimeData,
-      to: "genre/crime-suspense",
+      to: "genre",
     },
     {
       name: "Horror-Thriller",
       data: horrorData,
-      to: "genre/thriller-horror",
+      to: "genre",
     },
     {
       name: "Romance",
       data: romanceData,
-      to: "genre/romance",
+      to: "genre",
     },
   ];
 
@@ -203,7 +203,9 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
                   }}
                 >
                   {element.data.slice(0, 15).map((item, indx) => {
-                    return <Card item={item} key={indx} type={type} />;
+                    return (
+                      <Card item={item} key={indx} indx={index} type={type} />
+                    );
                   })}
                   <div className="flex flex-col items-center gap-4 ml-12">
                     <Link
