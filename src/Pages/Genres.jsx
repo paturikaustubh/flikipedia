@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Autocomplete, TextField } from "@mui/material";
 
 function Genres({ setNavIndx }) {
-  const { type } = useParams();
+  const { type, id } = useParams();
 
   useEffect(() => {
     type === "movie" ? setNavIndx(0) : setNavIndx(1);

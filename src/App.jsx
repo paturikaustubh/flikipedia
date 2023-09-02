@@ -44,6 +44,18 @@ function App() {
               }
             />
             <Route
+              path="/flikipedia/:type/genre"
+              element={
+                <Genres setLoading={setLoading} setNavIndx={setNavIndx} />
+              }
+            />
+            <Route
+              path="/flikipedia/:type/genre/:id"
+              element={
+                <Genres setLoading={setLoading} setNavIndx={setNavIndx} />
+              }
+            />
+            <Route
               path="/flikipedia/movie/:id"
               element={
                 <Details
@@ -82,12 +94,6 @@ function App() {
                   setLoading={setLoading}
                   setNavIndx={setNavIndx}
                 />
-              }
-            />
-            <Route
-              path="/flikipedia/genre/:type"
-              element={
-                <Genres setLoading={setLoading} setNavIndx={setNavIndx} />
               }
             />
             <Route

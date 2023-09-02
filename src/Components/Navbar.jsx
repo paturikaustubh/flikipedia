@@ -40,7 +40,7 @@ function Navbar({ navIndx, setNavIndx }) {
     },
     {
       name: "Genre",
-      to: navIndx === 0 ? "/flikipedia/genre/movie" : "/flikipedia/genre/tv",
+      to: navIndx === 0 ? "/flikipedia/movie/genre" : "/flikipedia/genre/tv",
     },
     {
       name: "Category",
@@ -81,7 +81,7 @@ function Navbar({ navIndx, setNavIndx }) {
         </button>
         <a
           className="font-bold md:text-4xl text-3xl lg:mx-8 ml-auto"
-          href="/flikipedia/movie/"
+          href="/flikipedia/movie"
         >
           <span className="text-[#FF6F00]">Fliki</span>
           <span className="text-[#00BFFF]">Pedia</span>
