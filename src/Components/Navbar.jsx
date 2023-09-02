@@ -24,7 +24,7 @@ import {
   ListItemText,
   CircularProgress,
 } from "@mui/material";
-import { Consumer } from "../Context/Data";
+import { ConsumerJSX, ConsumerEffect } from "../Context/Data";
 
 function Navbar({ navIndx, setNavIndx }) {
   let navigate = useNavigate();
@@ -150,7 +150,7 @@ function Navbar({ navIndx, setNavIndx }) {
 }
 
 function SearchDialog({ open, setOpen }) {
-  const { adult, header } = useContext(Consumer);
+  const { adult, header } = useContext(ConsumerEffect);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
@@ -361,7 +361,7 @@ function DrawerMenu({ list, open, setOpen, setOpenSearch }) {
           })}
         </List>
         <List className="w-72 bg-neutral-800 text-white">
-          <Consumer>
+          <ConsumerJSX>
             {({ adult, handleAdult }) => {
               return (
                 <>
@@ -380,7 +380,7 @@ function DrawerMenu({ list, open, setOpen, setOpenSearch }) {
                 </>
               );
             }}
-          </Consumer>
+          </ConsumerJSX>
         </List>
       </div>
     </Drawer>
@@ -397,7 +397,7 @@ function PreferencesMenu({ open, setOpen }) {
     >
       <div className="bg-neutral-800 h-full px-4 py-2">
         <List className="w-72 bg-neutral-800 text-white">
-          <Consumer>
+          <ConsumerJSX>
             {({ adult, handleAdult }) => {
               return (
                 <>
@@ -416,7 +416,7 @@ function PreferencesMenu({ open, setOpen }) {
                 </>
               );
             }}
-          </Consumer>
+          </ConsumerJSX>
         </List>
       </div>
     </Drawer>

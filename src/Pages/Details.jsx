@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { Tooltip } from "@mui/material";
 import Card from "../Components/Card";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import { Consumer } from "../Context/Data";
+import { ConsumerEffect } from "../Context/Data";
 
 function Details({ type, setLoading, setNavIndx }) {
   let { id } = useParams();
@@ -23,7 +23,7 @@ function Details({ type, setLoading, setNavIndx }) {
   });
   const [suggestions, setSuggestions] = useState([]);
 
-  const { header } = useContext(Consumer);
+  const { header } = useContext(ConsumerEffect);
 
   function timeConvert(n) {
     var num = n;

@@ -2,11 +2,11 @@ import { useEffect, useState, useRef, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
 import dayjs from "dayjs";
-import { Consumer } from "../Context/Data";
+import { ConsumerEffect } from "../Context/Data";
 
 function SeasonDetails({ setNavIndx, setLoading }) {
   const { no, id } = useParams();
-  const { header } = useContext(Consumer);
+  const { header } = useContext(ConsumerEffect);
 
   const [details, setDetails] = useState({ episodes: [] });
   const listInnerRef = useRef();

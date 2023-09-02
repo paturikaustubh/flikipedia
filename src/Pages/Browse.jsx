@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, East } from "@mui/icons-material";
 
 import Carousel from "../Components/Carousel";
 import Card from "../Components/Card";
-import { Consumer, Data } from "../Context/Data";
+import { ConsumerEffect } from "../Context/Data";
 
 function Movies({ setLoading, setNavIndx, navIndx, type }) {
   const [carouselData, setCarouselData] = useState([]);
@@ -56,7 +56,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
     },
   ];
 
-  const { adult, header } = useContext(Consumer);
+  const { adult, header } = useContext(ConsumerEffect);
 
   useEffect(() => {
     type === "movie" ? setNavIndx(0) : setNavIndx(1);

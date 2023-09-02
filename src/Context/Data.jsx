@@ -26,4 +26,5 @@ export class Data extends Component {
   }
 }
 
-export let Consumer = Context;
+export let ConsumerEffect = Context;
+export let ConsumerJSX = Context.Consumer;
