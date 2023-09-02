@@ -80,7 +80,6 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
           headers: header,
         }
       ).then((resp) => {
-        console.log(resp);
         setTopData(resp.data.results);
       });
     }
@@ -159,7 +158,6 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
         <Carousel data={carouselData} navIndx={navIndx} />
 
         {bodyElements.map((element, index) => {
-          console.log(element.name === "Top Rated" ? element.data : null);
           return (
             <div
               className="mt-16 text-white"

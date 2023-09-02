@@ -9,7 +9,6 @@ function Card({ item, type, indx }) {
       id={`container-${item.id}`}
       onMouseEnter={() => {
         const element = document.getElementById(`details-${item.id}-${indx}`);
-        console.log(element);
         element.classList.add("show");
       }}
       onMouseLeave={() => {

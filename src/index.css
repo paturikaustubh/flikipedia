@@ -107,4 +107,12 @@
     opacity: 1;
     background: linear-gradient(0deg, black, transparent);
   }
+
+  .genre-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 2fr));
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+  }
 }

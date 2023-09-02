@@ -13,9 +13,7 @@ function SeasonDetails({ setNavIndx, setLoading }) {
 
   window.onscroll(() => {
     const { scrollTop, scrollHeight } = listInnerRef.current;
-    console.log(" scrollTop, scrollHeight", scrollTop, scrollHeight);
     if (scrollTop === scrollHeight) {
-      // TO SOMETHING HERE
       console.log("Reached bottom");
     }
   });
