@@ -169,16 +169,12 @@ function Genres({ setNavIndx, setLoading }) {
                     .classList.remove("show");
                 }}
                 id={`genre-img`}
-                style={{
-                  backgroundImage: `url(https://image.tmdb.org/t/p/w45${poster_path})`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                }}
               >
                 <img
                   className="rounded-md"
                   src={`https://image.tmdb.org/t/p/w300${poster_path}`}
                   alt={title}
+                  style={{ objectFit: "cover", objectPosition: "center" }}
                 />
                 <div className="card-details" id={`details-${id}`}>
                   <span>{title ?? name}</span>
