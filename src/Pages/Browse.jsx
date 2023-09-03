@@ -128,7 +128,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
     function getScifiData() {
       Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${
-          type === "movie" ? "28,12" : "10765"
+          type === "movie" ? "878,14" : "10765"
         }`,
         { headers: header }
       ).then((resp) => {
