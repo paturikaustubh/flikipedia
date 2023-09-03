@@ -23,10 +23,10 @@ function Card({ item, type, indx }) {
           item.poster_path &&
           `https://image.tmdb.org/t/p/w300${item.poster_path}`
         }
-        alt={item.title}
+        alt={item.title ?? item.name}
       />
       <div className="card-details" id={`details-${item.id}-${indx}`}>
-        <span>{item.title}</span>
+        <span>{item.title ?? item.name}</span>
         <span>
           <i className="fa fa-star mr-1" aria-hidden="true" />
           {item.vote_average}

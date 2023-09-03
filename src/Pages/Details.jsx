@@ -253,9 +253,9 @@ function Details({ type, setLoading, setNavIndx }) {
             <div className="font-semibold text-xl">
               Available Languages:{" "}
               <div className="flex flex-wrap gap-4 mt-1 mb-2">
-                {details.spoken_languages.map((lang) => {
+                {details.spoken_languages.map((lang, indx) => {
                   return (
-                    <Tooltip title={lang.english_name}>
+                    <Tooltip title={lang.english_name} key={indx}>
                       <span
                         className="ml-2 font-light border-white border-2 rounded-md px-2 py-1"
                         key={lang.name}

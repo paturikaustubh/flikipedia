@@ -44,13 +44,7 @@ function App() {
               }
             />
             <Route
-              path="/flikipedia/:type/genre"
-              element={
-                <Genres setLoading={setLoading} setNavIndx={setNavIndx} />
-              }
-            />
-            <Route
-              path="/flikipedia/:type/genre/:id"
+              path="/flikipedia/genre"
               element={
                 <Genres setLoading={setLoading} setNavIndx={setNavIndx} />
               }
@@ -123,7 +117,8 @@ function App() {
           sx={{
             color: "#fff",
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            backgroundColor: "black",
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            backdropFilter: "blur(5px)",
           }}
           open={loading}
         >

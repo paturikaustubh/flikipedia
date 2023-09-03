@@ -10,9 +10,10 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
-import { ConsumerEffect, ConsumerJSX } from "../Context/Data";
+import { ConsumerEffect } from "../Context/Data";
+import { Add } from "@mui/icons-material";
 
-function Genres({ setNavIndx }) {
+function Genres({ setNavIndx, setLoading }) {
   const theme = useMemo(
     () =>
       createTheme({
@@ -24,27 +25,29 @@ function Genres({ setNavIndx }) {
   );
 
   const { adult, header } = useContext(ConsumerEffect);
-  const { type, id } = useParams();
 
   const [page, setPage] = useState(1);
   const [genres, setGenres] = useState([]);
   const [genreOpts, setGenreOpts] = useState([]);
   const [separator, setSeparator] = useState("%2C");
+  const [type, setType] = useState("movie");
 
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    type === "movie" ? setNavIndx(0) : setNavIndx(1);
-
-    Axios.get(`https://api.themoviedb.org/3/genre/movie/list?language=en`, {
+    setNavIndx(2);
+    Axios.get(`https://api.themoviedb.org/3/genre/${type}/list?language=en`, {
       headers: header,
-    }).then(({ data }) => setGenreOpts(data.genres));
-  }, [false]);
+    }).then(({ data }) => {
+      setGenreOpts(data.genres);
+    });
+  }, [type]);
 
   useEffect(() => {
+    setLoading(true);
     async function getData() {
       await Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc${
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc${
           genres.length > 0
             ? `&with_genres=${genres.map((genre) => genre.id).join(separator)}`
             : ""
@@ -53,12 +56,13 @@ function Genres({ setNavIndx }) {
           headers: header,
         }
       ).then(({ data }) => {
-        console.log(data.results[0]);
         setData(data.results);
+        setLoading(false);
       });
     }
     getData();
-  }, [adult]);
+    setPage(1);
+  }, [adult, type]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -69,13 +73,9 @@ function Genres({ setNavIndx }) {
             : "Search TV Shows by Genre"}
         </p>
         <div className="mt-8 grid grid-cols-12 gap-4">
-          <div className="lg:col-span-8 md:col-span-6 col-span-12">
-            <p className="lg:text-2xl text-lg font-[300]">
-              Select your Genre(s)
-            </p>
+          <div className="lg:col-span-8 md:col-span-6 col-span-12 items-center">
             <Autocomplete
               size="medium"
-              className="mt-2"
               multiple
               disableCloseOnSelect
               id="genre-selector"
@@ -85,27 +85,39 @@ function Genres({ setNavIndx }) {
               renderInput={(params) => <TextField {...params} label="Genres" />}
             />
           </div>
-          <div className="lg:col-span-4 md:col-span-6 col-span-12 w-full">
-            <p className="lg:text-2xl text-lg md:text-right mb-2 font-[300]">
-              Include genres as
-            </p>
+          <div className="lg:col-span-2 md:col-span-3 col-span-6 w-full">
             <TextField
               select
               value={separator}
               className="w-full"
               onChange={({ target }) => setSeparator(target.value)}
               disabled={genres.length < 2}
+              label="Include genres as"
             >
               <MenuItem value="%2C">And</MenuItem>
               <MenuItem value="%7C">Or</MenuItem>
+            </TextField>
+          </div>
+          <div className="lg:col-span-2 md:col-span-3 col-span-6 w-full">
+            <TextField
+              select
+              value={type}
+              className="w-full"
+              onChange={({ target }) => setType(target.value)}
+              label="Category"
+            >
+              <MenuItem value="movie">Movies</MenuItem>
+              <MenuItem value="tv">TV/Series</MenuItem>
             </TextField>
           </div>
           <div className="col-span-12 self-center ml-auto">
             <div
               className="lg:text-xl text-fliki-500 border-2 border-fliki-500 rounded-md px-4 py-2 cursor-pointer hover:text-neutral-900 hover:bg-fliki-500 duration-200"
               onClick={() => {
+                setLoading(true);
+                document.getElementById("genre-img").classList.add("hide");
                 Axios.get(
-                  `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc${
+                  `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc${
                     genres.length > 0
                       ? `&with_genres=${genres
                           .map((genre) => genre.id)
@@ -117,6 +129,8 @@ function Genres({ setNavIndx }) {
                   }
                 ).then(({ data }) => {
                   setData(data.results);
+                  document.getElementById("genre-img").classList.remove("hide");
+                  setLoading(false);
                 });
               }}
             >
@@ -129,18 +143,76 @@ function Genres({ setNavIndx }) {
           Results
         </div>
 
-        <div className="mt-4 genre-grid">
-          {data.map(({ id, title, vote_average, poster_path }) => {
+        <div className="my-4 genre-grid">
+          {data.map(({ id, title, vote_average, poster_path, name }, indx) => {
             return (
-              <Link className="rounded-md mx-auto" to={`/${type}/${id}`}>
+              <Link
+                to={`/flikipedia/${type}/${id}`}
+                key={indx}
+                className="rounded-md mx-auto lg:w-full w-60 lg:hover:scale-105 duration-300 relative genre-img"
+                onMouseEnter={() => {
+                  document
+                    .getElementById(`details-${id}`)
+                    .classList.add("show");
+                }}
+                onMouseLeave={() => {
+                  document
+                    .getElementById(`details-${id}`)
+                    .classList.remove("show");
+                }}
+                id={`genre-img`}
+                style={{
+                  backgroundImage: `url(https://image.tmdb.org/t/p/w45${poster_path})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                }}
+              >
                 <img
                   className="rounded-md"
                   src={`https://image.tmdb.org/t/p/w300${poster_path}`}
                   alt={title}
                 />
+                <div className="card-details" id={`details-${id}`}>
+                  <span>{title ?? name}</span>
+                  <span>
+                    <i className="fa fa-star mr-1" aria-hidden="true" />
+                    {vote_average}
+                  </span>
+                </div>
               </Link>
             );
           })}
+
+          <div
+            className="rounded-md mx-auto lg:w-full w-60 lg:text-2xl bg-neutral-950 h-full flex justify-center items-center flex-col gap-4 cursor-pointer"
+            onClick={async () => {
+              setLoading(true);
+              setPage((prevVal) => prevVal + 1);
+              Axios.get(
+                `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=${
+                  page + 1
+                }&sort_by=popularity.desc${
+                  genres.length > 0
+                    ? `&with_genres=${genres
+                        .map((genre) => genre.id)
+                        .join(separator)}`
+                    : ""
+                }`,
+                {
+                  headers: header,
+                }
+              ).then(({ data }) => {
+                setData((prevVals) => [...prevVals, ...data.results]);
+                setLoading(false);
+              });
+            }}
+            style={{ aspectRatio: "3/4" }}
+          >
+            <div className="bg-neutral-800 rounded-full p-4">
+              <Add fontSize="large" />
+            </div>
+            View more
+          </div>
         </div>
       </div>
     </ThemeProvider>

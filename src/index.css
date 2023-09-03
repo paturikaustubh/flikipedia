@@ -93,6 +93,7 @@
     justify-content: end;
     padding: 1em;
     transition: opacity 300ms;
+    flex-wrap: wrap;
     overflow: hidden;
     border-bottom-left-radius: 0.375rem;
     border-bottom-right-radius: 0.375rem;
@@ -114,5 +115,14 @@
     justify-content: space-around;
     align-items: center;
     gap: 1rem;
+  }
+
+  .genre-img {
+    opacity: 1;
+    transition: 400ms;
+  }
+
+  .genre-img.hide {
+    opacity: 0;
   }
 }

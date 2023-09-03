@@ -40,12 +40,11 @@ function Navbar({ navIndx, setNavIndx }) {
     },
     {
       name: "Genre",
-      to: navIndx === 0 ? "/flikipedia/movie/genre" : "/flikipedia/genre/tv",
+      to: "/flikipedia/genre",
     },
     {
       name: "Category",
-      to:
-        navIndx === 0 ? "/flikipedia/category/movie" : "/flikipedia/categoy/tv",
+      to: "/flikipedia/category",
     },
   ];
   const [openSearch, setOpenSearch] = useState(false);
