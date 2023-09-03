@@ -14,7 +14,7 @@ import { ConsumerEffect } from "../Context/Data";
 import { Add } from "@mui/icons-material";
 import SoloCard from "../Components/SoloCard";
 
-function Genres({ setNavIndx, setLoading }) {
+function Genres({ setLoading }) {
   const theme = useMemo(
     () =>
       createTheme({
@@ -84,7 +84,6 @@ function Genres({ setNavIndx, setLoading }) {
   const [sortOrder, setSortOrder] = useState("popularity.desc");
 
   useEffect(() => {
-    setNavIndx(2);
     Axios.get(`https://api.themoviedb.org/3/genre/${type}/list?language=en`, {
       headers: header,
     }).then(({ data }) => {
