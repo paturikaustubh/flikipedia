@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Axios from "axios";
 
@@ -24,13 +24,19 @@ function Genres({ setNavIndx, setLoading }) {
     [false]
   );
 
+  const location = useLocation();
+
   const { adult, header } = useContext(ConsumerEffect);
 
   const [page, setPage] = useState(1);
-  const [genres, setGenres] = useState([]);
+  const [genres, setGenres] = useState(
+    location.state ? location.state.genres : []
+  );
   const [genreOpts, setGenreOpts] = useState([]);
   const [separator, setSeparator] = useState("%2C");
-  const [type, setType] = useState("movie");
+  const [type, setType] = useState(
+    location.state ? location.state.type : "movie"
+  );
 
   const [data, setData] = useState([]);
 
@@ -46,10 +52,11 @@ function Genres({ setNavIndx, setLoading }) {
   useEffect(() => {
     setLoading(true);
     async function getData() {
+      console.log(genres);
       await Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc${
           genres.length > 0
-            ? `&with_genres=${genres.map((genre) => genre.id).join(separator)}`
+            ? `&with_genres=${genres.map((genre) => genre).join(separator)}`
             : ""
         }`,
         {
@@ -80,8 +87,9 @@ function Genres({ setNavIndx, setLoading }) {
               disableCloseOnSelect
               id="genre-selector"
               options={genreOpts}
+              value={genreOpts.filter(({ id }) => genres.includes(id))}
               getOptionLabel={(option) => option.name}
-              onChange={(_, opts) => setGenres(opts)}
+              onChange={(_, opts) => setGenres(opts.map(({ id }) => id))}
               renderInput={(params) => <TextField {...params} label="Genres" />}
             />
           </div>
@@ -120,7 +128,7 @@ function Genres({ setNavIndx, setLoading }) {
                   `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc${
                     genres.length > 0
                       ? `&with_genres=${genres
-                          .map((genre) => genre.id)
+                          .map((genre) => genre)
                           .join(separator)}`
                       : ""
                   }`,

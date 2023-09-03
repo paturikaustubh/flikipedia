@@ -17,6 +17,8 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
   const [crimeData, setCrimeData] = useState([]);
   const [horrorData, setHorrorData] = useState([]);
   const [romanceData, setRomanceData] = useState([]);
+  const [sciFiData, setSciFiData] = useState([]);
+  const [animationData, setAnimationData] = useState([]);
 
   const bodyElements = [
     {
@@ -32,27 +34,44 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
     {
       name: "Action-Adventure",
       data: actionData,
-      to: "genre",
+      to: "/flikipedia/genre",
+      genres: type === "movie" ? [28, 12] : [10759],
+    },
+    {
+      name: "Sci-Fi - Fantasy",
+      data: sciFiData,
+      to: "/flikipedia/genre",
+      genres: type === "movie" ? [878, 14] : [10765],
+    },
+    {
+      name: "Animation",
+      data: animationData,
+      to: "/flikipedia/genre",
+      genres: [16],
     },
     {
       name: "Comedy",
       data: comedyData,
-      to: "genre",
+      to: "/flikipedia/genre",
+      genres: [35],
     },
     {
       name: "Crime-Suspense",
       data: crimeData,
-      to: "genre",
+      to: "/flikipedia/genre",
+      genres: [80, 9648],
     },
     {
       name: "Horror-Thriller",
       data: horrorData,
-      to: "genre",
+      to: "/flikipedia/genre",
+      genres: [27, 53],
     },
     {
       name: "Romance",
       data: romanceData,
-      to: "genre",
+      to: "/flikipedia/genre",
+      genres: [10749],
     },
   ];
 
@@ -97,10 +116,32 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
 
     function getActionData() {
       Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=28%2C12`,
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${
+          type === "movie" ? "28,12" : "10759"
+        }`,
         { headers: header }
       ).then((resp) => {
         setActionData(resp.data.results);
+      });
+    }
+
+    function getScifiData() {
+      Axios.get(
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${
+          type === "movie" ? "28,12" : "10765"
+        }`,
+        { headers: header }
+      ).then((resp) => {
+        setSciFiData(resp.data.results);
+      });
+    }
+
+    function getAnimationData() {
+      Axios.get(
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=16`,
+        { headers: header }
+      ).then((resp) => {
+        setAnimationData(resp.data.results);
       });
     }
 
@@ -145,6 +186,8 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
     getTopData();
     getPopularData();
     getActionData();
+    getScifiData();
+    getAnimationData();
     getComedyData();
     getCrimeData();
     getHorrorData();
@@ -199,19 +242,24 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
                 >
                   {element.data.slice(0, 15).map((item, indx) => {
                     return (
-                      <Card item={item} key={indx} indx={index} type={type} />
+                      <>
+                        <Card item={item} key={indx} indx={index} type={type} />
+                        {indx === element.data.slice(0, 15).length - 1 && (
+                          <div className="flex flex-col items-center gap-4 ml-12">
+                            <Link
+                              onClick={() => window.scrollTo({ top: 0 })}
+                              to={element.to}
+                              className="bg-neutral-800 rounded-full p-4 lg:mx-28 hover:lg:scale-110 duration-300"
+                              state={{ genres: element.genres, type: type }}
+                            >
+                              <East fontSize="large" />
+                            </Link>
+                            <p className="text-xl">View more</p>
+                          </div>
+                        )}
+                      </>
                     );
                   })}
-                  <div className="flex flex-col items-center gap-4 ml-12">
-                    <Link
-                      onClick={() => window.scrollTo({ top: 0 })}
-                      to={element.to}
-                      className="bg-neutral-800 rounded-full p-4 lg:mx-28 hover:lg:scale-110 duration-300"
-                    >
-                      <East fontSize="large" />
-                    </Link>
-                    <p className="text-xl">View more</p>
-                  </div>
                   <div
                     id={`prev-${index}`}
                     className={`lg:flex justify-center text-5xl items-center absolute left-0 z-20 h-[75%] prev hidden`}
