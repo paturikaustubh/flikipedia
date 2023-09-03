@@ -12,11 +12,13 @@ import { Backdrop, CircularProgress } from "@mui/material";
 
 import Navbar from "./Components/Navbar";
 import { Data } from "./Context/Data";
+
 const Browse = lazy(() => import("./Pages/Browse"));
 const Test = lazy(() => import("./Pages/Test"));
 const Details = lazy(() => import("./Pages/Details"));
 const SeasonDetails = lazy(() => import("./Pages/SeasonDetails"));
 const Genres = lazy(() => import("./Pages/Genres"));
+const Category = lazy(() => import("./Pages/Category"));
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -41,12 +43,6 @@ function App() {
                   navIndx={navIndx}
                   type={"movie"}
                 />
-              }
-            />
-            <Route
-              path="/flikipedia/genre"
-              element={
-                <Genres setLoading={setLoading} setNavIndx={setNavIndx} />
               }
             />
             <Route
@@ -88,6 +84,18 @@ function App() {
                   setLoading={setLoading}
                   setNavIndx={setNavIndx}
                 />
+              }
+            />
+            <Route
+              path="/flikipedia/genre"
+              element={
+                <Genres setLoading={setLoading} setNavIndx={setNavIndx} />
+              }
+            />
+            <Route
+              path="/flikipedia/category"
+              element={
+                <Category setLoading={setLoading} setNavIndx={setNavIndx} />
               }
             />
             <Route

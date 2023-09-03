@@ -250,7 +250,14 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
                               onClick={() => window.scrollTo({ top: 0 })}
                               to={element.to}
                               className="bg-neutral-800 rounded-full p-4 lg:mx-28 hover:lg:scale-110 duration-300"
-                              state={{ genres: element.genres, type: type }}
+                              state={{
+                                genres: element.genres,
+                                type: type,
+                                category: element.name
+                                  .toLowerCase()
+                                  .split(" ")
+                                  .join("_"),
+                              }}
                             >
                               <East fontSize="large" />
                             </Link>

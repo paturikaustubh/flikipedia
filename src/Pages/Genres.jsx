@@ -70,7 +70,8 @@ function Genres({ setNavIndx, setLoading }) {
     },
   ];
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(39848);
+  const [maxPages, setMaxPages] = useState(99);
   const [genres, setGenres] = useState(
     location.state ? location.state.genres : []
   );
@@ -105,7 +106,9 @@ function Genres({ setNavIndx, setLoading }) {
           headers: header,
         }
       ).then(({ data }) => {
+        console.log(data);
         setData(data.results);
+        setMaxPages(data.total_pages);
         setLoading(false);
       });
     }
@@ -117,9 +120,7 @@ function Genres({ setNavIndx, setLoading }) {
     <ThemeProvider theme={theme}>
       <div className="pt-[6.5rem] text-white lg:px-8 md:px-4 px-2">
         <p className="lg:text-5xl text-3xl font-[500] text-orange-500">
-          {type === "movie"
-            ? "Search Movies by Genre"
-            : "Search TV Shows by Genre"}
+          Genres in {type === "movie" ? "Movies" : "TV Shows"}
         </p>
         <div className="mt-8 grid grid-cols-12 gap-4">
           <div className="lg:col-span-8 md:col-span-6 col-span-12 items-center">
@@ -154,10 +155,10 @@ function Genres({ setNavIndx, setLoading }) {
               value={type}
               className="w-full"
               onChange={({ target }) => setType(target.value)}
-              label="Category"
+              label="Type"
             >
               <MenuItem value="movie">Movies</MenuItem>
-              <MenuItem value="tv">TV/Series</MenuItem>
+              <MenuItem value="tv">TV Shows</MenuItem>
             </TextField>
           </div>
         </div>
@@ -190,7 +191,7 @@ function Genres({ setNavIndx, setLoading }) {
         </div>
 
         <div className="flex gap-4 mt-12 justify-between items-center">
-          <div className="lg:text-5xl text-3xl text-pedia-500 font-[500]">
+          <div className="lg:text-4xl text-3xl text-pedia-500 font-[500]">
             Results
           </div>
           <TextField
@@ -212,36 +213,38 @@ function Genres({ setNavIndx, setLoading }) {
             );
           })}
 
-          <div
-            className="rounded-md mx-auto lg:w-full w-60 lg:text-2xl bg-neutral-950 h-full flex justify-center items-center flex-col gap-4 cursor-pointer"
-            onClick={async () => {
-              setLoading(true);
-              setPage((prevVal) => prevVal + 1);
-              Axios.get(
-                `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=${
-                  page + 1
-                }&sort_by=${sortOrder}${
-                  genres.length > 0
-                    ? `&with_genres=${genres
-                        .map((genre) => genre.id)
-                        .join(separator)}`
-                    : ""
-                }`,
-                {
-                  headers: header,
-                }
-              ).then(({ data }) => {
-                setData((prevVals) => [...prevVals, ...data.results]);
-                setLoading(false);
-              });
-            }}
-            style={{ aspectRatio: "3/4" }}
-          >
-            <div className="bg-neutral-800 rounded-full p-4">
-              <Add fontSize="large" />
+          {page < maxPages && (
+            <div
+              className="rounded-md mx-auto lg:w-full w-60 lg:text-2xl bg-neutral-950 h-full flex justify-center items-center flex-col gap-4 cursor-pointer"
+              onClick={async () => {
+                setLoading(true);
+                setPage((prevVal) => prevVal + 1);
+                Axios.get(
+                  `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=${
+                    page + 1
+                  }&sort_by=${sortOrder}${
+                    genres.length > 0
+                      ? `&with_genres=${genres
+                          .map((genre) => genre.id)
+                          .join(separator)}`
+                      : ""
+                  }`,
+                  {
+                    headers: header,
+                  }
+                ).then(({ data }) => {
+                  setData((prevVals) => [...prevVals, ...data.results]);
+                  setLoading(false);
+                });
+              }}
+              style={{ aspectRatio: "3/4" }}
+            >
+              <div className="bg-neutral-800 rounded-full p-4">
+                <Add fontSize="large" />
+              </div>
+              View more
             </div>
-            View more
-          </div>
+          )}
         </div>
       </div>
     </ThemeProvider>
