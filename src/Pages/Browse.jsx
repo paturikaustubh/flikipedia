@@ -24,12 +24,12 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
     {
       name: "Popular",
       data: popularData,
-      to: "category/popular",
+      to: "/flikipedia/category",
     },
     {
       name: "Top Rated",
       data: topData,
-      to: "category/top-rated",
+      to: "/flikipedia/category",
     },
     {
       name: "Action-Adventure",

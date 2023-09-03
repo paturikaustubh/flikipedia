@@ -23,10 +23,51 @@ function Genres({ setNavIndx, setLoading }) {
       }),
     [false]
   );
-
   const location = useLocation();
-
   const { adult, header } = useContext(ConsumerEffect);
+
+  const sortOpts = [
+    {
+      value: "popularity.asc",
+      option: "Popularity ASC",
+    },
+    {
+      value: "popularity.desc",
+      option: "Popularity DESC",
+    },
+    {
+      value: "revenue.asc",
+      option: "Revenue ASC",
+    },
+    {
+      value: "revenue.desc",
+      option: "Revenue DESC",
+    },
+    {
+      value: "primary_release_date.asc",
+      option: "Primary release date ASC",
+    },
+    {
+      value: "primary_release_date.desc",
+      option: "Primary release date DESC",
+    },
+    {
+      value: "vote_average.asc",
+      option: "Vote average ASC",
+    },
+    {
+      value: "vote_average.desc",
+      option: "Vote average DESC",
+    },
+    {
+      value: "vote_count.asc",
+      option: "Vote count ASC",
+    },
+    {
+      value: "vote_count.desc",
+      option: "Vote count DESC",
+    },
+  ];
 
   const [page, setPage] = useState(1);
   const [genres, setGenres] = useState(
@@ -37,8 +78,8 @@ function Genres({ setNavIndx, setLoading }) {
   const [type, setType] = useState(
     location.state ? location.state.type : "movie"
   );
-
   const [data, setData] = useState([]);
+  const [sortOrder, setSortOrder] = useState("popularity.desc");
 
   useEffect(() => {
     setNavIndx(2);
@@ -54,7 +95,7 @@ function Genres({ setNavIndx, setLoading }) {
     async function getData() {
       console.log(genres);
       await Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc${
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=${sortOrder}${
           genres.length > 0
             ? `&with_genres=${genres.map((genre) => genre).join(separator)}`
             : ""
@@ -69,7 +110,7 @@ function Genres({ setNavIndx, setLoading }) {
     }
     getData();
     setPage(1);
-  }, [adult, type]);
+  }, [adult, type, sortOrder]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -118,37 +159,49 @@ function Genres({ setNavIndx, setLoading }) {
               <MenuItem value="tv">TV/Series</MenuItem>
             </TextField>
           </div>
-          <div className="col-span-12 self-center ml-auto">
-            <div
-              className="lg:text-xl text-fliki-500 border-2 border-fliki-500 rounded-md px-4 py-2 cursor-pointer hover:text-neutral-900 hover:bg-fliki-500 duration-200"
-              onClick={() => {
-                setLoading(true);
-                document.getElementById("genre-img").classList.add("hide");
-                Axios.get(
-                  `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc${
-                    genres.length > 0
-                      ? `&with_genres=${genres
-                          .map((genre) => genre)
-                          .join(separator)}`
-                      : ""
-                  }`,
-                  {
-                    headers: header,
-                  }
-                ).then(({ data }) => {
-                  setData(data.results);
-                  document.getElementById("genre-img").classList.remove("hide");
-                  setLoading(false);
-                });
-              }}
-            >
-              Search
-            </div>
+        </div>
+        <div className="flex justify-end mt-2 gap-4 items-center">
+          <div
+            className="lg:text-xl text-fliki-500 border-2 border-fliki-500 rounded-md px-4 py-2 cursor-pointer hover:text-neutral-900 hover:bg-fliki-500 duration-200"
+            onClick={() => {
+              setLoading(true);
+              document.getElementById("genre-img").classList.add("hide");
+              Axios.get(
+                `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=${sortOrder}${
+                  genres.length > 0
+                    ? `&with_genres=${genres
+                        .map((genre) => genre)
+                        .join(separator)}`
+                    : ""
+                }`,
+                {
+                  headers: header,
+                }
+              ).then(({ data }) => {
+                setData(data.results);
+                document.getElementById("genre-img").classList.remove("hide");
+                setLoading(false);
+              });
+            }}
+          >
+            Search
           </div>
         </div>
 
-        <div className="lg:text-5xl text-3xl mt-8 text-pedia-500 font-[500]">
-          Results
+        <div className="flex gap-4 mt-12 justify-between items-center">
+          <div className="lg:text-5xl text-3xl text-pedia-500 font-[500]">
+            Results
+          </div>
+          <TextField
+            select
+            value={sortOrder}
+            onChange={({ target }) => setSortOrder(target.value)}
+            label="Sort by"
+          >
+            {sortOpts.map(({ value, option }) => (
+              <MenuItem value={value}>{option}</MenuItem>
+            ))}
+          </TextField>
         </div>
 
         <div className="my-4 genre-grid">
@@ -195,7 +248,7 @@ function Genres({ setNavIndx, setLoading }) {
               Axios.get(
                 `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=${
                   page + 1
-                }&sort_by=popularity.desc${
+                }&sort_by=${sortOrder}${
                   genres.length > 0
                     ? `&with_genres=${genres
                         .map((genre) => genre.id)
