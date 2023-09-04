@@ -197,8 +197,10 @@ function Genres({ setLoading }) {
             onChange={({ target }) => setSortOrder(target.value)}
             label="Sort by"
           >
-            {sortOpts.map(({ value, option }) => (
-              <MenuItem value={value}>{option}</MenuItem>
+            {sortOpts.map(({ value, option }, indx) => (
+              <MenuItem value={value} key={indx}>
+                {option}
+              </MenuItem>
             ))}
           </TextField>
         </div>

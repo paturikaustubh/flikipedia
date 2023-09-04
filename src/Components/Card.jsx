@@ -29,7 +29,7 @@ function Card({ item, type, indx }) {
         <span>{item.title ?? item.name}</span>
         <span>
           <i className="fa fa-star mr-1" aria-hidden="true" />
-          {item.vote_average}
+          {Math.round(item.vote_average * 10) / 10}
         </span>
       </div>
     </Link>

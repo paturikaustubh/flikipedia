@@ -63,7 +63,7 @@ function SeasonDetails({ setNavIndx, setLoading }) {
           {details.episodes.map((episode) => {
             return (
               <div
-                className="grid lg:grid-cols-4 grid-cols-2 items-center rounded-md gap-4 py-4 px-2 flex-wrap border w-full bg-neutral-900 border-gray-700"
+                className="grid lg:grid-cols-4 grid-cols-2 items-center rounded-md gap-4 py-4 px-2 flex-wrap border w-full bg-neutral-900 border-neutral-700"
                 key={episode.id}
               >
                 <img
@@ -85,7 +85,7 @@ function SeasonDetails({ setNavIndx, setLoading }) {
                     {episode.runtime} min
                   </div>
                 </div>
-                <div className="pr-4 text-lg lg:flex hidden col-span-2 justify-between gap-10">
+                <div className="pr-4 text-lg lg:flex hidden col-span-2 justify-between items-center gap-10">
                   <div className="max-w-[55ch] text-justify">
                     {episode.overview}
                   </div>

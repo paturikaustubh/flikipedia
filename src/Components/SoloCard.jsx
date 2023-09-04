@@ -25,7 +25,7 @@ export default function SoloCard({ element, type, indx }) {
         <span>{title ?? name}</span>
         <span>
           <i className="fa fa-star mr-1" aria-hidden="true" />
-          {vote_average}
+          {Math.round(vote_average * 10) / 10}
         </span>
       </div>
     </Link>

@@ -11,12 +11,10 @@ import {
 import {
   Dialog,
   useMediaQuery,
-  useTheme,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider,
   Drawer,
   List,
   ListItem,

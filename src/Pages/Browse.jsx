@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 
@@ -8,17 +8,13 @@ import Carousel from "../Components/Carousel";
 import Card from "../Components/Card";
 import { ConsumerEffect } from "../Context/Data";
 
-function Movies({ setLoading, setNavIndx, navIndx, type }) {
+export default function Movies({ setLoading, setNavIndx, navIndx, type }) {
   const [carouselData, setCarouselData] = useState([]);
   const [topData, setTopData] = useState([]);
   const [popularData, setPopularData] = useState([]);
   const [actionData, setActionData] = useState([]);
   const [comedyData, setComedyData] = useState([]);
-  const [crimeData, setCrimeData] = useState([]);
   const [horrorData, setHorrorData] = useState([]);
-  const [romanceData, setRomanceData] = useState([]);
-  const [sciFiData, setSciFiData] = useState([]);
-  const [animationData, setAnimationData] = useState([]);
 
   const bodyElements = [
     {
@@ -38,28 +34,10 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
       genres: type === "movie" ? [28, 12] : [10759],
     },
     {
-      name: "Sci-Fi - Fantasy",
-      data: sciFiData,
-      to: "/flikipedia/genre",
-      genres: type === "movie" ? [878, 14] : [10765],
-    },
-    {
-      name: "Animation",
-      data: animationData,
-      to: "/flikipedia/genre",
-      genres: [16],
-    },
-    {
       name: "Comedy",
       data: comedyData,
       to: "/flikipedia/genre",
       genres: [35],
-    },
-    {
-      name: "Crime-Suspense",
-      data: crimeData,
-      to: "/flikipedia/genre",
-      genres: [80, 9648],
     },
     {
       name: "Horror-Thriller",
@@ -67,22 +45,15 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
       to: "/flikipedia/genre",
       genres: [27, 53],
     },
-    {
-      name: "Romance",
-      data: romanceData,
-      to: "/flikipedia/genre",
-      genres: [10749],
-    },
   ];
 
   const { adult, header } = useContext(ConsumerEffect);
 
   useEffect(() => {
     type === "movie" ? setNavIndx(0) : setNavIndx(1);
-    // window.scrollTo({ top: 0, behavior: "smooth" });
     setLoading(true);
-    function getCarouselData() {
-      Axios.get(
+    async function getData() {
+      await Axios.get(
         `https://api.themoviedb.org/3/trending/${type}/day?language=en-US`,
         {
           headers: header,
@@ -90,10 +61,13 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
       ).then((resp) => {
         setCarouselData(resp.data.results);
       });
-    }
-
-    function getTopData() {
-      Axios.get(
+      await Axios.get(
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=27,53`,
+        { headers: header }
+      ).then((resp) => {
+        setHorrorData(resp.data.results);
+      });
+      await Axios.get(
         `https://api.themoviedb.org/3/${type}/top_rated?language=en-US&page=1`,
         {
           headers: header,
@@ -101,10 +75,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
       ).then((resp) => {
         setTopData(resp.data.results);
       });
-    }
-
-    function getPopularData() {
-      Axios.get(
+      await Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc`,
         {
           headers: header,
@@ -112,10 +83,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
       ).then((resp) => {
         setPopularData(resp.data.results);
       });
-    }
-
-    function getActionData() {
-      Axios.get(
+      await Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${
           type === "movie" ? "28,12" : "10759"
         }`,
@@ -123,75 +91,16 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
       ).then((resp) => {
         setActionData(resp.data.results);
       });
-    }
-
-    function getScifiData() {
-      Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${
-          type === "movie" ? "878,14" : "10765"
-        }`,
-        { headers: header }
-      ).then((resp) => {
-        setSciFiData(resp.data.results);
-      });
-    }
-
-    function getAnimationData() {
-      Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=16`,
-        { headers: header }
-      ).then((resp) => {
-        setAnimationData(resp.data.results);
-      });
-    }
-
-    function getComedyData() {
-      Axios.get(
+      await Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=35`,
         { headers: header }
       ).then((resp) => {
         setComedyData(resp.data.results);
       });
+      setLoading(false);
     }
 
-    function getCrimeData() {
-      Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=80,9648`,
-        { headers: header }
-      ).then((resp) => {
-        setCrimeData(resp.data.results);
-      });
-    }
-
-    function getHorrorData() {
-      Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=27,53`,
-        { headers: header }
-      ).then((resp) => {
-        setHorrorData(resp.data.results);
-      });
-    }
-
-    function getRomanceData() {
-      Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=10749`,
-        { headers: header }
-      ).then((resp) => {
-        setRomanceData(resp.data.results);
-        setLoading(false);
-      });
-    }
-
-    getCarouselData();
-    getTopData();
-    getPopularData();
-    getActionData();
-    getScifiData();
-    getAnimationData();
-    getComedyData();
-    getCrimeData();
-    getHorrorData();
-    getRomanceData();
+    getData();
   }, [type, adult]);
 
   return (
@@ -199,7 +108,6 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
       <title>FlikiPedia</title>
       <div className="text-white">
         <Carousel data={carouselData} navIndx={navIndx} />
-
         {bodyElements.map((element, index) => {
           return (
             <div
@@ -249,8 +157,8 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
                 >
                   {element.data.slice(0, 15).map((item, indx) => {
                     return (
-                      <>
-                        <Card item={item} key={indx} indx={index} type={type} />
+                      <Fragment key={indx}>
+                        <Card item={item} indx={index} type={type} />
                         {indx === element.data.slice(0, 15).length - 1 && (
                           <div className="flex flex-col items-center gap-4 lg:ml-24">
                             <Link
@@ -271,7 +179,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
                             <p className="text-xl">View more</p>
                           </div>
                         )}
-                      </>
+                      </Fragment>
                     );
                   })}
                   <div
@@ -299,9 +207,16 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
             </div>
           );
         })}
+        <div className="flex justify-center items-center">
+          <Link
+            state={{ type: type, genres: [] }}
+            to="/flikipedia/genre"
+            className="text-center my-8 lg:text-3xl text-2xl text-fliki-500 border-2 rounded-md px-4 py-2 border-fliki-500 hover:text-neutral-900 hover:bg-fliki-500 duration-300"
+          >
+            More Genres
+          </Link>
+        </div>
       </div>
     </>
   );
 }
-
-export default Movies;
