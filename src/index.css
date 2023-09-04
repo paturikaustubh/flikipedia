@@ -151,7 +151,6 @@ footer a {
   display: inline-block;
   font-weight: 300;
   transition: 300ms;
-  border-radius: 0.25em;
 }
 
 footer a::after {
@@ -205,4 +204,16 @@ a.insta:hover::after {
 
 .go-up.scale {
   scale: 1;
+}
+
+.link-underline > div {
+  width: 0;
+  height: 2px;
+  background-color: rgb(204 251 241);
+  margin-top: 0.1em;
+  transition: 300ms;
+}
+
+.link-underline:hover > div {
+  width: 100%;
 }

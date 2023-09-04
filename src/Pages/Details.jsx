@@ -91,9 +91,9 @@ function Details({ type, setLoading, setNavIndx }) {
 
   return (
     <div className="text-white">
-      <div className="relative min-h-[700px]">
+      <div className="relative lg:h-[700px] h-[600px]">
         <div
-          className="min-h-[700px] opacity-[0.65]"
+          className="lg:h-[700px] h-[600px] opacity-[0.65]"
           style={{
             backgroundImage: details.backdrop_path
               ? `url("https://image.tmdb.org/t/p/w1280${details.backdrop_path}")`
@@ -106,15 +106,15 @@ function Details({ type, setLoading, setNavIndx }) {
           }}
         />
         <div
-          className="absolute bottom-0 w-full mt-4"
+          className="absolute bottom-0 w-full"
           style={{
             backgroundImage: "linear-gradient(transparent, black)",
           }}
         >
-          <div className="lg:flex grid grid-cols-1 col-span-0 gap-8 items-end pb-1 pl-4 lg:w-3/4 w-full mt-4">
+          <div className="lg:flex grid grid-cols-1 col-span-0 lg:gap-8 md:gap-4 gap-2 items-end pb-1 pl-4 lg:w-3/4 w-full mt-4">
             <img
               loading="lazy"
-              className="lg:h-[525px] h-[400px] pt-8 rounded-md col-span-1"
+              className="lg:h-[525px] h-[350px] pt-8 rounded-md col-span-1"
               src={
                 details.poster_path
                   ? `https://image.tmdb.org/t/p/w300${details.poster_path}`
@@ -123,17 +123,17 @@ function Details({ type, setLoading, setNavIndx }) {
               alt="Poster"
             />
             <div className="flex flex-col flex-wrap mb-4 col-span-1">
-              <p className="lg:text-6xl text-3xl font-bold text-slate-200 flex flex-wrap">
+              <p className="lg:text-6xl md:text-4xl text-2xl font-bold text-slate-200 flex flex-wrap">
                 {type === "movie" ? details.title : details.name}
               </p>
 
               <p className="lg:text-xl font-extralight mt-1 mb-4 text-gray-300 italic">
                 {details.tagline}
               </p>
-              <p className="lg:text-4xl text-2xl mb-6 font-light">
+              <p className="lg:text-4xl text-xl mb-6 font-light">
                 <i className="fa fa-star" aria-hidden="true" />{" "}
                 {Math.round(details.vote_average * 10) / 10} {"  "}
-                <span className="lg:text-2xl text-[1rem]">
+                <span className="lg:text-2xl text-sm">
                   ({details.vote_count} votes)
                 </span>
               </p>
@@ -146,7 +146,7 @@ function Details({ type, setLoading, setNavIndx }) {
                         onClick={() => window.scrollTo({ top: 0 })}
                         key={indx}
                         to={`/flikipedia/genre`}
-                        className=" px-2 py-1 md:text-base text-sm border-white border-2 rounded-lg hover:bg-neutral-800 duration-300 flex-wrap"
+                        className=" px-2 py-1 md:text-base text-sm border-white border-2 rounded-md hover:bg-neutral-800 duration-300 flex-wrap"
                         state={{
                           genres: [genre.id],
                           type: type,
@@ -164,8 +164,8 @@ function Details({ type, setLoading, setNavIndx }) {
         </div>
       </div>
       <div className="lg:px-8 md:px-4 px-2">
-        <div className="grid lg:gap-20 gap-10 grid-cols-1 lg:grid-cols-2 mb-16  mt-14">
-          <div className="mt-2">
+        <div className="grid lg:gap-20 gap-10 grid-cols-1 lg:grid-cols-2 lg:my-16 md:my-8 my-4">
+          <div className="">
             <p className="lg:text-4xl md:text-3xl text-2xl font-semibold">
               <span className="details-heading-title">
                 Overview
@@ -177,7 +177,7 @@ function Details({ type, setLoading, setNavIndx }) {
             </p>
           </div>
 
-          <div className="mt-2">
+          <div className="">
             <p className="lg:text-4xl md:text-3xl text-2xl font-semibold">
               <span className="details-heading-title">
                 Details
@@ -371,7 +371,7 @@ function Details({ type, setLoading, setNavIndx }) {
         )}
 
         <div
-          className=" mb-20 flex flex-col"
+          className="mb-20 flex flex-col"
           style={{
             ...(details.production_companies.length === 0 && {
               display: "none",

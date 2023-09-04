@@ -207,15 +207,22 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
               key={index}
               style={{ ...(element.data.length === 0 && { display: "none" }) }}
             >
-              <p className="md:text-3xl text-2xl text-teal-100 font-bold mb-4 pl-8">
+              <Link
+                to={element.to}
+                state={{
+                  genres: element.genres,
+                  type: type,
+                  category: element.name.toLowerCase().split(" ").join("_"),
+                }}
+                className="link-underline inline-block md:text-3xl text-2xl text-teal-100 font-bold mb-4 ml-8"
+              >
                 {`${element.name} `}
-                <span>
-                  <East fontSize="inherit" />
-                </span>
-              </p>
+                <East fontSize="inherit" />
+                <div />
+              </Link>
               <div className="relative">
                 <div
-                  className="flex gap-3 overflow-x-auto py-3 pl-8 mb-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll group cards scroll-smooth"
+                  className="flex gap-3 overflow-x-auto py-3 pl-8 pr-4 mb-4 overflow-y-hidden items-center whitespace-nowrap hide-scroll group cards scroll-smooth"
                   id={`cards-${index}`}
                   onScroll={() => {
                     const element = document.getElementById(`cards-${index}`);
@@ -245,7 +252,7 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
                       <>
                         <Card item={item} key={indx} indx={index} type={type} />
                         {indx === element.data.slice(0, 15).length - 1 && (
-                          <div className="flex flex-col items-center gap-4 ml-12">
+                          <div className="flex flex-col items-center gap-4 lg:ml-24">
                             <Link
                               onClick={() => window.scrollTo({ top: 0 })}
                               to={element.to}
