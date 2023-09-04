@@ -206,14 +206,16 @@ function SearchDialog({ open, setOpen }) {
         sx={{ backdropFilter: "blur(3px)" }}
       >
         <DialogTitle>
-          <p className="text-5xl text-blue-300 font-bold">Search</p>
+          <p className="lg:text-5xl md:text-4xl text-3xl text-blue-300 font-bold">
+            Search
+          </p>
         </DialogTitle>
         <DialogContent>
           <DialogContentText component={"div"} color={"white"}>
             <input
               autoFocus
               type="text"
-              className="bg-neutral-700 text-lg rounded-md px-4 py-2 h-14 w-full mt-2 outline-none border-0"
+              className="bg-neutral-700 text-lg rounded-md px-4 py-2 h-14 w-full lg:mt-2 outline-none border-0"
               placeholder="Movies/TV Shows"
               onInput={(e) => setSearch(e.target.value)}
             />
