@@ -179,15 +179,23 @@ a.insta:hover::after {
   background-color: #ec0075;
 }
 
+@media (min-width: 768px) {
+  .go-up {
+    font-size: 4rem;
+    bottom: 30px;
+    right: 40px;
+  }
+}
+
 .go-up {
   outline: none !important;
   border: none !important;
   background-color: transparent;
   position: fixed;
-  bottom: 30px;
-  right: 40px;
+  bottom: 10px;
+  right: 20px;
   z-index: 50;
-  font-size: 4rem;
+  font-size: 3rem;
   transition: 150ms ease-out;
   transform-origin: center;
   scale: 0;

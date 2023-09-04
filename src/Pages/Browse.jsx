@@ -207,10 +207,10 @@ function Movies({ setLoading, setNavIndx, navIndx, type }) {
               key={index}
               style={{ ...(element.data.length === 0 && { display: "none" }) }}
             >
-              <p className="text-3xl text-teal-100 font-bold mb-4 pl-8">
+              <p className="md:text-3xl text-2xl text-teal-100 font-bold mb-4 pl-8">
                 {`${element.name} `}
                 <span>
-                  <East fontSize="large" />
+                  <East fontSize="inherit" />
                 </span>
               </p>
               <div className="relative">
