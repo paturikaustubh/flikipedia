@@ -82,13 +82,13 @@ function Navbar({ navIndx, setNavIndx }) {
         >
           <West style={{ color: "white" }} />
         </button>
-        <a
+        <Link
           className="font-bold md:text-4xl text-3xl lg:mx-8 ml-auto"
-          href="/flikipedia/movie"
+          to="/flikipedia/movie"
         >
           <span className="text-fliki-500">Fliki</span>
           <span className="text-pedia-500">Pedia</span>
-        </a>
+        </Link>
 
         {/* ====================||  NAVIGATORS  ||==================== */}
         <div className="lg:flex gap-8 text-xl text-gray-400 hidden">
