@@ -4,7 +4,7 @@
 
 ### What is Flikipedia?
 
-Flikipedia is a web application that allows you to dive into the fascinating universe of films and series. Whether you're looking for information about your favorite movies,series or discover new gems, Flikipedia has you covered.
+Flikipedia is a web application that allows you to dive into the fascinating universe of films and series. Whether you're looking for information about your favorite movies, series or discover new gems, Flikipedia has you covered.
 
 Flikipedia is fully responsive, ensuring a seamless experience across devices, from desktop to mobile.
 
