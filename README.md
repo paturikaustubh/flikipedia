@@ -21,4 +21,4 @@ Flikipedia is fully responsive, ensuring a seamless experience across devices, f
 - **Data Source:** To provide you with up-to-date movie and TV show information, we rely on [TMDB's APIs](https://www.themoviedb.org/documentation/api).
 
 ## Getting started
-Visit the [website](https://paturikaustubh.github.io/flikipedia/movie) and start your cinematic journey today.
+[Clikc here](https://paturikaustubh.github.io/flikipedia/movie) to experience FlikiPedia!
