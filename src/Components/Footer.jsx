@@ -54,10 +54,18 @@ export default function Footer() {
             >
               GitHub
             </Link>
-            <Link target="_blank" className="linkedin">
+            <Link
+              to="https://www.linkedin.com/in/kaustubhpaturi/"
+              target="_blank"
+              className="linkedin"
+            >
               LinkedIn
             </Link>
-            <Link target="_blank" className="insta">
+            <Link
+              to="https://www.instagram.com/not_sardonian/"
+              target="_blank"
+              className="insta"
+            >
               Instagram
             </Link>
           </div>
