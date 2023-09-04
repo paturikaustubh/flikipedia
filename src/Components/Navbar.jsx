@@ -232,7 +232,7 @@ function SearchDialog({ open, setOpen }) {
               className={
                 searchResults.length === 0 && search === ""
                   ? "hidden"
-                  : `overflow-y-auto h-96 pt-8 pb-4 px-2 bg-neutral-900 rounded-md mt-1`
+                  : `overflow-y-auto h-96 md:pt-4 pt-2  pb-4 md:px-2 bg-neutral-900 rounded-md mt-1`
               }
             >
               {searchResults.length === 0 && search !== "" && !searching ? (
@@ -252,7 +252,7 @@ function SearchDialog({ open, setOpen }) {
                       return (
                         <Link
                           to={`/flikipedia/${result.media_type}/${result.id}`}
-                          className="flex items-center min-h-36 gap-3 font-light hover:bg-neutral-800 duration-75 p-2 rounded-md"
+                          className="flex items-center md:flex-row flex-col min-h-36 gap-3 font-light hover:bg-neutral-800 duration-75 p-2 rounded-md"
                           key={`${result.media_type}/${result.id}`}
                           onClick={() => {
                             setOpen(false);
@@ -275,10 +275,10 @@ function SearchDialog({ open, setOpen }) {
                             width={100}
                           />
                           <div className="flex flex-col gap-2">
-                            <p className="text-xl">
+                            <p className="lg:text-xl">
                               {result.name || result.title}
                             </p>
-                            <p className="text-neutral-200">
+                            <p className="text-neutral-200 text-sm">
                               {result.release_date
                                 ? result.release_date.slice(0, 4)
                                 : result.first_air_date
