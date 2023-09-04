@@ -94,7 +94,6 @@ function Genres({ setLoading }) {
   useEffect(() => {
     setLoading(true);
     async function getData() {
-      console.log(genres);
       await Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=${sortOrder}${
           genres.length > 0
@@ -105,7 +104,6 @@ function Genres({ setLoading }) {
           headers: header,
         }
       ).then(({ data }) => {
-        console.log(data);
         setData(data.results);
         setMaxPages(data.total_pages);
         setLoading(false);

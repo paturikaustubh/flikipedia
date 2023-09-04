@@ -12,6 +12,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 
 import Navbar from "./Components/Navbar";
 import { Data } from "./Context/Data";
+import Footer from "./Components/Footer";
 
 const Browse = lazy(() => import("./Pages/Browse"));
 const Test = lazy(() => import("./Pages/Test"));
@@ -133,6 +134,7 @@ function App() {
           <div className="text-3xl mr-8">Loading data...</div>
           <CircularProgress color="inherit" />
         </Backdrop>
+        <Footer />
       </Router>
     </Data>
   );
@@ -149,7 +151,11 @@ function LazyAss() {
 function FallbackScreen() {
   return (
     <Backdrop
-      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{
+        color: "#fff",
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: "rgb(0 0 0)",
+      }}
       open={true}
     >
       <CircularProgress color="inherit" />

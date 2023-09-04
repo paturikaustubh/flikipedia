@@ -29,6 +29,7 @@ import { ConsumerJSX, ConsumerEffect } from "../Context/Data";
 function Navbar({ navIndx, setNavIndx }) {
   let navigate = useNavigate();
   const [blur, setBlur] = useState(0);
+  const [show, setShow] = useState(false);
   const navigators = [
     {
       name: "Movies",
@@ -57,6 +58,9 @@ function Navbar({ navIndx, setNavIndx }) {
     } else {
       setBlur(0);
     }
+
+    if (document.documentElement.scrollTop > 500) setShow(true);
+    else setShow(false);
   };
 
   return (
@@ -82,8 +86,8 @@ function Navbar({ navIndx, setNavIndx }) {
           className="font-bold md:text-4xl text-3xl lg:mx-8 ml-auto"
           href="/flikipedia/movie"
         >
-          <span className="text-[#FF6F00]">Fliki</span>
-          <span className="text-[#00BFFF]">Pedia</span>
+          <span className="text-fliki-500">Fliki</span>
+          <span className="text-pedia-500">Pedia</span>
         </a>
 
         {/* ====================||  NAVIGATORS  ||==================== */}
@@ -144,6 +148,13 @@ function Navbar({ navIndx, setNavIndx }) {
         setOpenSearch={setOpenSearch}
       />
       <PreferencesMenu open={openPreferences} setOpen={setOpenPreferences} />
+
+      <div
+        className={`go-up ${show ? "scale" : ""}`}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        ⬆️
+      </div>
     </nav>
   );
 }

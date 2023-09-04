@@ -125,4 +125,76 @@
   .genre-img.hide {
     opacity: 0;
   }
+
+  .footer-title:hover > :first-child {
+    text-shadow: 3px 3px 3rem rgba(255 111 0 / 0.7);
+    transition: 300ms;
+  }
+
+  .footer-title:hover > :last-child {
+    text-shadow: 3px 3px 3rem rgb(0 191 255 / 0.7);
+    transition: 300ms;
+  }
+}
+
+::selection {
+  background-color: #ff6f00;
+  color: rgb(23 23 23);
+}
+
+footer {
+  cursor: default;
+}
+
+footer a {
+  margin-inline: auto;
+  display: inline-block;
+  font-weight: 300;
+  transition: 300ms;
+  border-radius: 0.25em;
+}
+
+footer a::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 0;
+  transition: 300ms;
+}
+
+footer a:hover::after {
+  content: "";
+
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: white;
+}
+
+a.linkedin:hover::after {
+  background-color: #0077b5;
+}
+
+a.insta:hover::after {
+  background-color: #ec0075;
+}
+
+.go-up {
+  outline: none !important;
+  border: none !important;
+  background-color: transparent;
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  z-index: 10;
+  font-size: 4rem;
+  transition: 150ms ease-out;
+  transform-origin: center;
+  scale: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.go-up.scale {
+  scale: 1;
 }
