@@ -27,11 +27,6 @@ export default function Category({ setLoading }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (category !== "popular" && category !== "top_rated")
-      setCategory("popular");
-  }, [type]);
-
-  useEffect(() => {
     setLoading(true);
     Axios.get(
       `https://api.themoviedb.org/3/${type}/${category}?language=en-US&page=${page}`,
@@ -80,7 +75,11 @@ export default function Category({ setLoading }) {
             select
             value={type}
             label="Type"
-            onChange={({ target }) => setType(target.value)}
+            onChange={({ target }) => {
+              if (category !== "popular" && category !== "top_rated")
+                setCategory("popular");
+              setType(target.value);
+            }}
           >
             <MenuItem value="movie">Movies</MenuItem>
             <MenuItem value="tv">TV Shows</MenuItem>
