@@ -474,9 +474,9 @@ function Details({ type, setLoading, setNavIndx }) {
             else document.getElementById("next").classList.add("show");
           }}
         >
-          {suggestions.map((suggestion) => {
+          {suggestions.map((suggestion, indx) => {
             if (suggestion.poster_path)
-              return <Card type={type} item={suggestion} />;
+              return <Card type={type} item={suggestion} key={indx} />;
           })}
           <div
             id={"prev"}
