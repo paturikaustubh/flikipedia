@@ -25,7 +25,7 @@ function Genres({ setLoading }) {
     [false]
   );
   const location = useLocation();
-  const { adult, header } = useContext(ConsumerEffect);
+  const { adult, header, handleErrorAlert } = useContext(ConsumerEffect);
 
   const sortOpts = [
     {

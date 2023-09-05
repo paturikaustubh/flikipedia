@@ -6,7 +6,7 @@ import { ConsumerEffect } from "../Context/Data";
 
 function SeasonDetails({ setNavIndx, setLoading }) {
   const { no, id } = useParams();
-  const { header } = useContext(ConsumerEffect);
+  const { header, handleErrorAlert } = useContext(ConsumerEffect);
 
   const [details, setDetails] = useState({ episodes: [] });
   const listInnerRef = useRef();

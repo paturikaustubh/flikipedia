@@ -47,7 +47,7 @@ export default function Movies({ setLoading, setNavIndx, navIndx, type }) {
     },
   ];
 
-  const { adult, header } = useContext(ConsumerEffect);
+  const { adult, header, handleErrorAlert } = useContext(ConsumerEffect);
 
   useEffect(() => {
     type === "movie" ? setNavIndx(0) : setNavIndx(1);

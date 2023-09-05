@@ -18,7 +18,7 @@ export default function Category({ setLoading }) {
     [false]
   );
   const { state } = useLocation();
-  const { header } = useContext(ConsumerEffect);
+  const { header, handleErrorAlert } = useContext(ConsumerEffect);
 
   const [page, setPage] = useState(1);
   const [maxPages, setMaxPages] = useState(99);
