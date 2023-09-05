@@ -36,11 +36,16 @@ export default function Category({ setLoading }) {
     Axios.get(
       `https://api.themoviedb.org/3/${type}/${category}?language=en-US&page=${page}`,
       { headers: header }
-    ).then(({ data }) => {
-      setData(data.results);
-      setMaxPages(data.total_pages);
-      setLoading(false);
-    });
+    )
+      .then(({ data }) => {
+        setData(data.results);
+        setMaxPages(data.total_pages);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        handleErrorAlert(true);
+      });
   }, [category, type]);
 
   return (
@@ -103,10 +108,15 @@ export default function Category({ setLoading }) {
                   {
                     headers: header,
                   }
-                ).then(({ data }) => {
-                  setData((prevVals) => [...prevVals, ...data.results]);
-                  setLoading(false);
-                });
+                )
+                  .then(({ data }) => {
+                    setData((prevVals) => [...prevVals, ...data.results]);
+                    setLoading(false);
+                  })
+                  .catch((e) => {
+                    setLoading(false);
+                    handleErrorAlert(true);
+                  });
               }}
               style={{ aspectRatio: "3/4" }}
             >

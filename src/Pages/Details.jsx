@@ -23,7 +23,7 @@ function Details({ type, setLoading, setNavIndx }) {
   });
   const [suggestions, setSuggestions] = useState([]);
 
-  const { header } = useContext(ConsumerEffect);
+  const { header, handleErrorAlert } = useContext(ConsumerEffect);
 
   function timeConvert(n) {
     var num = n;
@@ -50,41 +50,55 @@ function Details({ type, setLoading, setNavIndx }) {
         {
           headers: header,
         }
-      ).then((resp) => {
-        setDetails((prevVals) => ({ ...prevVals, ...resp.data }));
+      )
+        .then((resp) => {
+          setDetails((prevVals) => ({ ...prevVals, ...resp.data }));
 
-        const revenue = document.getElementById("revenue");
-        if (resp.data.revenue > resp.data.budget) {
-          if (revenue.classList.contains("text-red-500")) {
-            revenue.classList.remove("text-red-500");
+          const revenue = document.getElementById("revenue");
+          if (resp.data.revenue > resp.data.budget) {
+            if (revenue.classList.contains("text-red-500")) {
+              revenue.classList.remove("text-red-500");
+            }
+            revenue.classList.add("text-green-500");
+          } else {
+            if (revenue.classList.contains("text-green-500"))
+              revenue.classList.remove("text-green-500");
+            revenue.classList.add("text-red-500");
           }
-          revenue.classList.add("text-green-500");
-        } else {
-          if (revenue.classList.contains("text-green-500"))
-            revenue.classList.remove("text-green-500");
-          revenue.classList.add("text-red-500");
-        }
 
-        resp.data.budget === 0 && type === "movie"
-          ? document.getElementById("budget").classList.add("text-red-500")
-          : document.getElementById("budget").classList.contains("text-red-500")
-          ? document.getElementById("budget").classList.remove("text-red-500")
-          : "";
+          resp.data.budget === 0 && type === "movie"
+            ? document.getElementById("budget").classList.add("text-red-500")
+            : document
+                .getElementById("budget")
+                .classList.contains("text-red-500")
+            ? document.getElementById("budget").classList.remove("text-red-500")
+            : "";
 
-        resp.data.status === "Ended" && type === "tv"
-          ? document.getElementById("status").classList.add("text-green-500")
-          : document.getElementById("status").classList.add("text-orange-500");
+          resp.data.status === "Ended" && type === "tv"
+            ? document.getElementById("status").classList.add("text-green-500")
+            : document
+                .getElementById("status")
+                .classList.add("text-orange-500");
 
-        Axios.get(
-          `https://api.themoviedb.org/3/${type}/${id}/similar?language=en-US&page=1`,
-          { headers: header }
-        ).then(({ data }) => {
-          if (data) {
-            setSuggestions(data.results);
-            setLoading(false);
-          }
+          Axios.get(
+            `https://api.themoviedb.org/3/${type}/${id}/similar?language=en-US&page=1`,
+            { headers: header }
+          )
+            .then(({ data }) => {
+              if (data) {
+                setSuggestions(data.results);
+                setLoading(false);
+              }
+            })
+            .catch((e) => {
+              setLoading(false);
+              handleErrorAlert(true);
+            });
+        })
+        .catch((e) => {
+          setLoading(false);
+          handleErrorAlert(true);
         });
-      });
     }
     getData();
   }, [id]);

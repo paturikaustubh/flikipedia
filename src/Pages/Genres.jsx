@@ -86,9 +86,14 @@ function Genres({ setLoading }) {
   useEffect(() => {
     Axios.get(`https://api.themoviedb.org/3/genre/${type}/list?language=en`, {
       headers: header,
-    }).then(({ data }) => {
-      setGenreOpts(data.genres);
-    });
+    })
+      .then(({ data }) => {
+        setGenreOpts(data.genres);
+      })
+      .catch((e) => {
+        setLoading(false);
+        handleErrorAlert(true);
+      });
   }, [type]);
 
   useEffect(() => {
@@ -103,11 +108,16 @@ function Genres({ setLoading }) {
         {
           headers: header,
         }
-      ).then(({ data }) => {
-        setData(data.results);
-        setMaxPages(data.total_pages);
-        setLoading(false);
-      });
+      )
+        .then(({ data }) => {
+          setData(data.results);
+          setMaxPages(data.total_pages);
+          setLoading(false);
+        })
+        .catch((e) => {
+          setLoading(false);
+          handleErrorAlert(true);
+        });
     }
     getData();
     setPage(1);
@@ -176,11 +186,16 @@ function Genres({ setLoading }) {
                 {
                   headers: header,
                 }
-              ).then(({ data }) => {
-                setData(data.results);
-                document.getElementById("genre-img").classList.remove("hide");
-                setLoading(false);
-              });
+              )
+                .then(({ data }) => {
+                  setData(data.results);
+                  document.getElementById("genre-img").classList.remove("hide");
+                  setLoading(false);
+                })
+                .catch((e) => {
+                  setLoading(false);
+                  handleErrorAlert(true);
+                });
             }}
           >
             Search
@@ -231,10 +246,15 @@ function Genres({ setLoading }) {
                   {
                     headers: header,
                   }
-                ).then(({ data }) => {
-                  setData((prevVals) => [...prevVals, ...data.results]);
-                  setLoading(false);
-                });
+                )
+                  .then(({ data }) => {
+                    setData((prevVals) => [...prevVals, ...data.results]);
+                    setLoading(false);
+                  })
+                  .catch((e) => {
+                    setLoading(false);
+                    handleErrorAlert(true);
+                  });
               }}
               style={{ aspectRatio: "3/4" }}
             >

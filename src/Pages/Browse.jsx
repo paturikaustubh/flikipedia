@@ -58,45 +58,75 @@ export default function Movies({ setLoading, setNavIndx, navIndx, type }) {
         {
           headers: header,
         }
-      ).then((resp) => {
-        setCarouselData(resp.data.results);
-      });
+      )
+        .then((resp) => {
+          setCarouselData(resp.data.results);
+        })
+        .catch((e) => {
+          setLoading(false);
+          handleErrorAlert(true);
+        });
       await Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=27,53`,
         { headers: header }
-      ).then((resp) => {
-        setHorrorData(resp.data.results);
-      });
+      )
+        .then((resp) => {
+          setHorrorData(resp.data.results);
+        })
+        .catch((e) => {
+          setLoading(false);
+          handleErrorAlert(true);
+        });
       await Axios.get(
         `https://api.themoviedb.org/3/${type}/top_rated?language=en-US&page=1`,
         {
           headers: header,
         }
-      ).then((resp) => {
-        setTopData(resp.data.results);
-      });
+      )
+        .then((resp) => {
+          setTopData(resp.data.results);
+        })
+        .catch((e) => {
+          setLoading(false);
+          handleErrorAlert(true);
+        });
       await Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc`,
         {
           headers: header,
         }
-      ).then((resp) => {
-        setPopularData(resp.data.results);
-      });
+      )
+        .then((resp) => {
+          setPopularData(resp.data.results);
+        })
+        .catch((e) => {
+          setLoading(false);
+          handleErrorAlert(true);
+        });
       await Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${
           type === "movie" ? "28,12" : "10759"
         }`,
         { headers: header }
-      ).then((resp) => {
-        setActionData(resp.data.results);
-      });
+      )
+        .then((resp) => {
+          setActionData(resp.data.results);
+        })
+        .catch((e) => {
+          setLoading(false);
+          handleErrorAlert(true);
+        });
       await Axios.get(
         `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=35`,
         { headers: header }
-      ).then((resp) => {
-        setComedyData(resp.data.results);
-      });
+      )
+        .then((resp) => {
+          setComedyData(resp.data.results);
+        })
+        .catch((e) => {
+          setLoading(false);
+          handleErrorAlert(true);
+        });
       setLoading(false);
     }
 

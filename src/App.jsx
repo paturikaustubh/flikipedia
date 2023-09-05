@@ -8,10 +8,10 @@ import {
   Link,
 } from "react-router-dom";
 
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress, Alert, Snackbar } from "@mui/material";
 
 import Navbar from "./Components/Navbar";
-import { Data } from "./Context/Data";
+import { ConsumerJSX, Data } from "./Context/Data";
 import Footer from "./Components/Footer";
 
 const Browse = lazy(() => import("./Pages/Browse"));
@@ -135,6 +135,7 @@ function App() {
           <CircularProgress color="inherit" />
         </Backdrop>
         <Footer />
+        <ErrorAlert />
       </Router>
     </Data>
   );
@@ -163,10 +164,29 @@ function FallbackScreen() {
   );
 }
 
-function wait(time) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
+function ErrorAlert() {
+  return (
+    <ConsumerJSX>
+      {({ errorAlert, handleErrorAlert }) => {
+        return (
+          <Snackbar
+            open={errorAlert}
+            anchorOrigin={{ horizontal: "center", vertical: "top" }}
+            autoHideDuration={3500}
+            onClose={() => handleErrorAlert(false)}
+          >
+            <Alert
+              severity="error"
+              variant="filled"
+              onClose={() => handleErrorAlert(false)}
+            >
+              There was an error connecting to the server. Please try again.
+            </Alert>
+          </Snackbar>
+        );
+      }}
+    </ConsumerJSX>
+  );
 }
 
 export default App;

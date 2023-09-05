@@ -24,10 +24,15 @@ function SeasonDetails({ setNavIndx, setLoading }) {
     Axios.get(
       `https://api.themoviedb.org/3/tv/${id}/season/${no}?language=en-US`,
       { headers: header }
-    ).then((resp) => {
-      setDetails(resp.data);
-      setLoading(false);
-    });
+    )
+      .then((resp) => {
+        setDetails(resp.data);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        handleErrorAlert(true);
+      });
   }, [false]);
 
   return (
