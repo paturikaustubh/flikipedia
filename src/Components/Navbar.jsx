@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, Fragment, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 
@@ -21,6 +21,12 @@ import {
   ListItemButton,
   ListItemText,
   CircularProgress,
+  Divider,
+  createTheme,
+  ThemeProvider,
+  TextField,
+  MenuItem,
+  styled,
 } from "@mui/material";
 import { ConsumerJSX, ConsumerEffect } from "../Context/Data";
 
@@ -158,10 +164,36 @@ function Navbar({ navIndx, setNavIndx }) {
 }
 
 function SearchDialog({ open, setOpen }) {
+  const CustInput = styled(TextField)({
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+      outline: "none",
+    },
+  });
+
+  const CustDialogContent = styled(DialogContent)({
+    "& .MuiDialogContent-root": {},
+  });
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: "dark",
+        },
+      }),
+    [false]
+  );
+
+  const minMd = useMediaQuery("(min-width:768px)");
+
   const { adult, header } = useContext(ConsumerEffect);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [searchFilter, setSearchFilter] = useState("multi");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(2);
 
   const handleClose = () => {
     setOpen(false);
@@ -171,57 +203,89 @@ function SearchDialog({ open, setOpen }) {
 
   useEffect(() => {
     setSearching(true);
+    if (search === "") setPage(1);
     let cancel;
     Axios.get(
-      `https://api.themoviedb.org/3/search/multi?query=${search}&include_adult=${adult}&language=en-US&page=1`,
+      `https://api.themoviedb.org/3/search/${searchFilter}?query=${search}&include_adult=${adult}&language=en-US&page=${page}`,
       {
         headers: header,
         cancelToken: new Axios.CancelToken((c) => (cancel = c)),
       }
     )
       .then((resp) => {
+        console.log(resp.data);
         setSearchResults(resp.data.results);
+        setTotalPages(resp.data.total_pages);
         setSearching(false);
       })
       .catch((e) => {
         if (Axios.isCancel(e)) return;
       });
     return cancel;
-  }, [search]);
+  }, [search, searchFilter]);
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Dialog
         disableRestoreFocus
         fullWidth
+        maxWidth="md"
         open={open}
         onClose={handleClose}
         PaperProps={{
           sx: {
-            backgroundColor: "rgb(38, 38, 38)",
+            backgroundColor: "rgb(0, 0, 0)",
+            margin: "0.5rem",
+            width: "100%",
+            maxHeight: "98%",
           },
         }}
-        sx={{ backdropFilter: "blur(3px)" }}
+        sx={{ backdropFilter: "blur(3px)", padding: 0 }}
       >
         <DialogTitle>
-          <p className="lg:text-5xl md:text-4xl text-3xl text-blue-300 font-bold">
-            Search
-          </p>
+          <p className="lg:text-5xl text-4xl text-blue-300 font-bold">Search</p>
         </DialogTitle>
-        <DialogContent>
+        <DialogContent
+          sx={{
+            ...(minMd ? { padding: "1em" } : { padding: "0.5em" }),
+          }}
+        >
           <DialogContentText component={"div"} color={"white"}>
-            <input
-              autoFocus
-              type="text"
-              className="bg-neutral-700 text-lg rounded-md px-4 py-2 h-14 w-full lg:mt-2 outline-none border-0"
-              placeholder="Movies/TV Shows"
-              onInput={(e) => setSearch(e.target.value)}
-            />
+            <div className="grid grid-cols-12 items-center gap-1 lg:mt-2 md:sticky top-1 px-2">
+              <input
+                autoFocus
+                type="text"
+                style={{
+                  backgroundColor: "rgb(64 64 64 / 0.9)",
+                  backdropFilter: "blur(3px)",
+                }}
+                className="focus:border-neutral-500 duration-300 text-lg border-left px-4 py-2 h-14 w-full outline-none border-neutral-700 lg:col-span-10 md:col-span-9 col-span-12"
+                placeholder="Movies/TV Shows"
+                onInput={(e) => setSearch(e.target.value)}
+              />
+              <CustInput
+                className={`text-lg border-right px-4 py-2 h-14 w-full outline-none lg:col-span-2 md:col-span-3 col-span-12`}
+                select
+                value={searchFilter}
+                style={{
+                  backgroundColor: "rgb(64 64 64 / 0.9)",
+                  backdropFilter: "blur(3px)",
+                }}
+                onChange={({ target }) => {
+                  setSearchFilter(target.value);
+                }}
+                sx={{ border: "2px 2px solid red" }}
+              >
+                <MenuItem value="multi">Multi</MenuItem>
+                <MenuItem value="movie">Movie</MenuItem>
+                <MenuItem value="tv">TV Show</MenuItem>
+              </CustInput>
+            </div>
             <p
               className={
                 searchResults.length === 0 && search === ""
                   ? "hidden"
-                  : "block mt-4"
+                  : "block mt-4 lg:text-xl text-lg"
               }
             >
               Results
@@ -230,7 +294,7 @@ function SearchDialog({ open, setOpen }) {
               className={
                 searchResults.length === 0 && search === ""
                   ? "hidden"
-                  : `overflow-y-auto h-96 md:pt-4 pt-2  pb-4 md:px-2 bg-neutral-900 rounded-md mt-1`
+                  : `overflow-y-auto  md:pt-4 pt-2  pb-4 md:px-2 bg-neutral-900 rounded-md mt-1`
               }
             >
               {searchResults.length === 0 && search !== "" && !searching ? (
@@ -238,58 +302,98 @@ function SearchDialog({ open, setOpen }) {
                   No results found
                 </div>
               ) : searchResults.length !== 0 && search !== "" && !searching ? (
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col">
                   {searchResults
                     .filter((result) => {
-                      return (
-                        result.media_type === "movie" ||
-                        result.media_type === "tv"
-                      );
+                      if (result.media_type)
+                        return (
+                          result.media_type === "movie" ||
+                          result.media_type === "tv"
+                        );
+                      else return result;
                     })
                     .map((result) => {
                       return (
-                        <Link
-                          to={`/flikipedia/${result.media_type}/${result.id}`}
-                          className="flex items-center md:flex-row flex-col min-h-36 gap-3 font-light hover:bg-neutral-800 duration-75 p-2 rounded-md"
-                          key={`${result.media_type}/${result.id}`}
-                          onClick={() => {
-                            setOpen(false);
-                            window.scrollTo({ top: 0 });
-                          }}
-                        >
-                          <img
-                            loading="lazy"
-                            id={`${result.media_type}/${result.id}`}
-                            className={
-                              result.poster_path
-                                ? "opacity-100 duration-300"
-                                : "opacity-0"
-                            }
-                            src={
-                              result.poster_path &&
-                              `https://image.tmdb.org/t/p/w92${result.poster_path}`
-                            }
-                            alt="Poster"
-                            width={100}
-                          />
-                          <div className="flex flex-col gap-2">
-                            <p className="lg:text-xl">
-                              {result.name || result.title}
-                            </p>
-                            <p className="text-neutral-200 text-sm">
-                              {result.release_date
-                                ? result.release_date.slice(0, 4)
-                                : result.first_air_date
-                                ? result.first_air_date.slice(0, 4)
-                                : ""}
-                            </p>
-                            <p className="text-sm text-neutral-400">
-                              {result.media_type.toUpperCase()}
-                            </p>
-                          </div>
-                        </Link>
+                        <Fragment>
+                          <Link
+                            to={`/flikipedia/${
+                              result.media_type ?? searchFilter
+                            }/${result.id}`}
+                            className="flex items-center md:flex-row flex-col min-h-36 gap-3 font-light hover:bg-neutral-800 duration-75 p-4 rounded-sm"
+                            key={`${result.media_type}/${result.id}`}
+                            onClick={() => {
+                              setOpen(false);
+                              window.scrollTo({ top: 0 });
+                            }}
+                          >
+                            <img
+                              loading="lazy"
+                              id={`${result.media_type}/${result.id}`}
+                              className={""}
+                              src={
+                                result.poster_path &&
+                                `https://image.tmdb.org/t/p/w${
+                                  minMd ? "185" : "92"
+                                }${result.poster_path}`
+                              }
+                              alt="Poster"
+                            />
+                            <div className="flex flex-col gap-2">
+                              <p className="lg:text-xl">
+                                {result.name || result.title}
+                              </p>
+                              <div className="flex md:flex-col flex-row md:gap-0 gap-3">
+                                <p className="text-neutral-200 text-sm">
+                                  {result.release_date
+                                    ? result.release_date.slice(0, 4)
+                                    : result.first_air_date
+                                    ? result.first_air_date.slice(0, 4)
+                                    : ""}
+                                </p>
+                                <p className="text-sm text-neutral-400">
+                                  {result.media_type
+                                    ? result.media_type.toUpperCase()
+                                    : ""}
+                                </p>
+                              </div>
+                            </div>
+                          </Link>
+                          <Divider />
+                        </Fragment>
                       );
                     })}
+                  {page < totalPages && (
+                    <div
+                      className=" self-center my-4 px-3 py-1 border-fliki-500 rounded-md text-fliki-500 border lg:text-xl text-lg cursor-pointer hover:text-neutral-900 hover:bg-fliki-500 duration-300"
+                      onClick={() => {
+                        setPage((prevVal) => prevVal + 1);
+                        let cancel;
+                        Axios.get(
+                          `https://api.themoviedb.org/3/search/${searchFilter}?query=${search}&include_adult=${adult}&language=en-US&page=${
+                            page + 1
+                          }`,
+                          {
+                            headers: header,
+                            cancelToken: new Axios.CancelToken(
+                              (c) => (cancel = c)
+                            ),
+                          }
+                        )
+                          .then((resp) => {
+                            setSearchResults((prevVal) => [
+                              ...prevVal,
+                              ...resp.data.results,
+                            ]);
+                          })
+                          .catch((e) => {
+                            if (Axios.isCancel(e)) return;
+                          });
+                        return cancel;
+                      }}
+                    >
+                      Load More
+                    </div>
+                  )}
                 </div>
               ) : searching ? (
                 <div className="w-full h-full flex items-center justify-center">
@@ -310,7 +414,7 @@ function SearchDialog({ open, setOpen }) {
           </button>
         </DialogActions>
       </Dialog>
-    </>
+    </ThemeProvider>
   );
 }
 
