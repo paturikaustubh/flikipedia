@@ -129,7 +129,7 @@
 
   @media (min-width: 768px) {
     .genre-grid {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
   }
 
