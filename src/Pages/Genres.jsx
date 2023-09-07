@@ -82,8 +82,10 @@ function Genres({ setLoading }) {
   );
   const [data, setData] = useState([]);
   const [sortOrder, setSortOrder] = useState("popularity.desc");
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     Axios.get(`https://api.themoviedb.org/3/genre/${type}/list?language=en`, {
       headers: header,
     })
@@ -91,20 +93,13 @@ function Genres({ setLoading }) {
         setGenreOpts(data.genres);
       })
       .catch((e) => {
-        setLoading(false);
         handleErrorAlert(true);
       });
-  }, [type]);
 
-  useEffect(() => {
-    setLoading(true);
+    setGenres([]);
     async function getData() {
       await Axios.get(
-        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=${sortOrder}${
-          genres.length > 0
-            ? `&with_genres=${genres.map((genre) => genre).join(separator)}`
-            : ""
-        }`,
+        `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=${sortOrder}`,
         {
           headers: header,
         }
@@ -121,7 +116,36 @@ function Genres({ setLoading }) {
     }
     getData();
     setPage(1);
-  }, [adult, type, sortOrder]);
+  }, [type]);
+
+  useEffect(() => {
+    if (!initialLoad) {
+      setLoading(true);
+      async function getData() {
+        await Axios.get(
+          `https://api.themoviedb.org/3/discover/${type}?include_adult=${adult}&include_video=false&language=en-US&page=1&sort_by=${sortOrder}${
+            genres.length > 0
+              ? `&with_genres=${genres.map((genre) => genre).join(separator)}`
+              : ""
+          }`,
+          {
+            headers: header,
+          }
+        )
+          .then(({ data }) => {
+            setData(data.results);
+            setMaxPages(data.total_pages);
+            setLoading(false);
+          })
+          .catch((e) => {
+            setLoading(false);
+            handleErrorAlert(true);
+          });
+      }
+      getData();
+      setPage(1);
+    } else setInitialLoad(false);
+  }, [adult, sortOrder, separator]);
 
   return (
     <ThemeProvider theme={theme}>
