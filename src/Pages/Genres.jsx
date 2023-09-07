@@ -220,7 +220,7 @@ function Genres({ setLoading }) {
           </TextField>
         </div>
 
-        <div className="my-4 genre-grid">
+        <div className="my-4 genre-grid mx-auto">
           {data.map((element, indx) => {
             return (
               <SoloCard element={element} key={indx} type={type} indx={indx} />
@@ -229,7 +229,7 @@ function Genres({ setLoading }) {
 
           {page < maxPages && (
             <div
-              className="rounded-md mx-auto lg:w-full w-60 lg:text-2xl bg-neutral-950 h-full flex justify-center items-center flex-col gap-4 cursor-pointer"
+              className="rounded-md mx-auto w-full lg:text-2xl bg-neutral-950 h-full flex justify-center items-center flex-col gap-4 cursor-pointer"
               onClick={async () => {
                 setLoading(true);
                 setPage((prevVal) => prevVal + 1);

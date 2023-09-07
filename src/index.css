@@ -100,8 +100,18 @@
   }
 
   .card-details > :first-child {
-    font-size: 1.4em;
+    font-size: 1em;
     font-weight: 500;
+  }
+
+  .card-details > :last-child {
+    font-size: 0.8em;
+  }
+
+  @media (min-width: 768px) {
+    .card-details > :first-child {
+      font-size: 1.4em;
+    }
   }
 
   .card-details.show {
@@ -111,10 +121,16 @@
 
   .genre-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(154px, 1fr));
     justify-content: space-around;
     align-items: center;
     gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .genre-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
   }
 
   .genre-img {
