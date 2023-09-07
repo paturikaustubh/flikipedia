@@ -112,6 +112,9 @@
     .card-details > :first-child {
       font-size: 1.4em;
     }
+    .card-details > :last-child {
+      font-size: 1em;
+    }
   }
 
   .card-details.show {
