@@ -10,7 +10,7 @@ Flikipedia is fully responsive, ensuring a seamless experience across devices, f
 
 - **Frontend Framework:** Flikipedia is built using [React.js](https://reactjs.org/), a powerful JavaScript library for building user interfaces.
 
-- **Styling:** We've used [Tailwind CSS](https://tailwindcss.com/) and [Material-UI](https://material-ui.com/) to create a sleek and user-friendly design.
+- **Styling:** I've used [Tailwind CSS](https://tailwindcss.com/) and [Material-UI](https://material-ui.com/) to create a sleek and user-friendly design.
 
 - **Build Tool:** The project is powered by [Vite](https://vitejs.dev/), a fast and minimalist build tool for modern web development.
 
