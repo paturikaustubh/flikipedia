@@ -22,3 +22,8 @@ Flikipedia is fully responsive, ensuring a seamless experience across devices, f
 
 ## Getting started
 [Clikc here](https://paturikaustubh.github.io/flikipedia/movie) to experience FlikiPedia!
+
+## Installation Guide
+- Make sure you have Node installed, or you can download it from [here](https://nodejs.org/en/download).
+- Then use `npm i` in your terminal/CMD to install all the dependencies.
+- Once that is done, use `npm run dev` to start the development server.
