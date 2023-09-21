@@ -1,6 +1,6 @@
 # FlikiPedia
 
-## General Information
+## Overview
 
 ### What is Flikipedia?
 
